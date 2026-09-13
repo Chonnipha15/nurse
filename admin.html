@@ -279,8 +279,12 @@
     </div>
     <div id="p-pdf-slots"></div>
     <div class="field">
-      <label>ลิงก์ไฟล์เพิ่มเติม (เช่น ลิงก์ Google Drive สำรอง หรือคอร์สวิดีโอภายนอก)</label>
-      <input type="url" id="p-extra-link" placeholder="https://drive.google.com/...">
+      <label>ไฟล์เพิ่มเติม / ลิงก์ภายนอก (PDF, รูปภาพ, วิดีโอ หรือลิงก์ Google Drive)</label>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px;">
+        <input type="file" id="p-extra-file" accept=".pdf,image/*,video/mp4,video/*" style="flex:1; min-width:220px;">
+        <input type="url" id="p-extra-link" placeholder="หรือวางลิงก์ภายนอก https://..." style="flex:1; min-width:220px;">
+      </div>
+      <div class="field-note-plain" id="p-extra-link-preview">เลือกไฟล์เพื่ออัปโหลดขึ้น Cloud Storage หรือวางลิงก์ภายนอกแทนได้</div>
     </div>
     <div class="form-actions">
       <button class="btn-primary" id="btn-save-product" onclick="saveProduct()">บันทึกสินค้า</button>
@@ -691,6 +695,13 @@
     document.getElementById('p-extra-link').value = p.extraLink || '';
     document.getElementById('cancel-edit-btn').classList.remove('hidden');
     window.scrollTo(0, 0);
+    document.getElementById('p-extra-file').value = '';
+    const previewEl = document.getElementById('p-extra-link-preview');
+    if (previewEl) {
+      previewEl.innerHTML = p.extraLink 
+        ? `ไฟล์ปัจจุบัน: <a href="${p.extraLink}" target="_blank" rel="noopener">เปิดดูไฟล์เดิม</a> (เลือกไฟล์ใหม่เพื่อแทนที่)` 
+        : 'เลือกไฟล์เพื่ออัปโหลดขึ้น Cloud Storage หรือวางลิงก์ภายนอกแทนได้';
+    }
   }
 
   function cancelEdit() {
@@ -704,6 +715,9 @@
     renderFileSlots(1);
     document.getElementById('p-extra-link').value = '';
     document.getElementById('cancel-edit-btn').classList.add('hidden');
+    document.getElementById('p-extra-file').value = '';
+    const previewEl = document.getElementById('p-extra-link-preview');
+    if (previewEl) previewEl.textContent = 'เลือกไฟล์เพื่ออัปโหลดขึ้น Cloud Storage หรือวางลิงก์ภายนอกแทนได้';
   }
 
   async function deleteProduct(id) {
@@ -722,7 +736,10 @@
     const priceRaw = document.getElementById('p-price').value;
     const wasRaw = document.getElementById('p-was').value;
     const meta = document.getElementById('p-meta').value.trim();
-    const extraLink = document.getElementById('p-extra-link').value.trim();
+    let extraLink = document.getElementById('p-extra-link').value.trim();
+    const extraFileInput = document.getElementById('p-extra-file');
+    const extraFile = extraFileInput && extraFileInput.files[0];
+
     let fileCount = parseInt(document.getElementById('p-file-count').value, 10);
     if (!fileCount || fileCount < 1) fileCount = 1;
 
@@ -736,6 +753,7 @@
     saveBtn.disabled = true;
 
     try {
+      // 1. อัปโหลดไฟล์ PDF ในชุดสินค้า (ถ้ามี)
       for (let i = 0; i < fileCount; i++) {
         const input = document.getElementById('p-pdf-slot-' + i);
         const file = input && input.files[0];
@@ -749,6 +767,28 @@
             console.warn('อัปโหลดไฟล์สินค้าไม่สำเร็จ:', uploadError.message);
           }
         }
+      }
+
+      // 2. ถ้ามีการแนบไฟล์เพิ่มเติม (PDF / รูปภาพ / วิดีโอ) ให้อัปโหลดขึ้น Cloud Storage
+      if (extraFile) {
+        const ext = extraFile.name.split('.').pop().toLowerCase();
+        const safeExtraName = `extra_${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${ext}`;
+        const extraPath = `products/extras/${safeExtraName}`;
+
+        const { error: extraUploadError } = await supabase.storage
+          .from('nurse-files')
+          .upload(extraPath, extraFile);
+
+        if (extraUploadError) {
+          throw new Error('อัปโหลดไฟล์เพิ่มเติมล้มเหลว: ' + extraUploadError.message);
+        }
+
+        // ขอ Public URL ของไฟล์ที่อัปโหลด
+        const { data: urlData } = supabase.storage
+          .from('nurse-files')
+          .getPublicUrl(extraPath);
+
+        extraLink = urlData.publicUrl;
       }
 
       const productPayload = {
