@@ -24,7 +24,7 @@ $catalog = [
                 'meta' => 'เอกสารประกอบการเรียน · PDF',
                 'price' => 250,
                 'was' => null,
-                'pdf_url' => 'files/BIOLOGY.pdf'
+                'pdf_url' => '/files/BIOLOGY.pdf'
             ],
             ['id' => 'patho2', 'name' => 'Pathology โรค เล่ม 2', 'meta' => 'เอกสารประกอบการเรียน · PDF', 'price' => 250, 'was' => null],
             ['id' => 'ca', 'name' => 'Pathology CA', 'meta' => 'เอกสารประกอบการเรียน · PDF', 'price' => 50, 'was' => null],
@@ -64,7 +64,7 @@ $previewSamples = [
         'name' => 'Pathology โรคที่พบบ่อยใน ER เล่ม 1',
         'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF',
         'icon' => '📄',
-        'url'  => 'files/BIOLOGY.pdf'
+        'url'  => '/files/BIOLOGY.pdf'
     ],
     [
         'name' => 'Pathology โรค เล่ม 2',
@@ -415,7 +415,7 @@ $initialReviews = [
                 ดูตัวอย่าง
               </a>
             <?php else: ?>
-              <!-- กรณีที่ยังไม่มี URL ให้เปิดหน้าจำลอง -->
+              <!-- กรณีที่ยังไม่มี URL ให้เปิดกล่องแจ้งเตือน -->
               <a class="preview-btn" href="#" onclick="openPreview('<?= htmlspecialchars(addslashes($sample['name'])) ?>', '<?= htmlspecialchars(addslashes($sample['meta'])) ?>'); return false;">
                 ดูตัวอย่าง
               </a>
@@ -807,12 +807,33 @@ $initialReviews = [
       return;
     }
 
-    const html = `<!DOCTYPE html><html lang="th"><head><meta charset="UTF-8"><title>ตัวอย่าง: ${name}</title>
-      <style>body{font-family:sans-serif;background:#FBF8F1;color:#2B2B2B;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;padding:24px;}
-      div{max-width:440px;background:#fff;padding:28px;border-radius:18px;border:2px solid #E7E1D2;}h1{font-size:20px;color:#C9524A;}p{color:#6B6560;font-size:14px;}</style></head>
-      <body><div><h1>ตัวอย่าง: ${name}</h1><p>${meta}</p><p>กำลังจัดเตรียมไฟล์ตัวอย่างจริงสำหรับรายการนี้</p></div></body></html>`;
-    const w = window.open('');
-    w.document.write(html);
+    // กรณีไม่มีไฟล์ จะเปิดแท็บใหม่พร้อมแสดงข้อความแทนการใช้ data:text/html ที่โดนเบราว์เซอร์บล็อก
+    const w = window.open('', '_blank');
+    if (w) {
+      w.document.write(`
+        <!DOCTYPE html>
+        <html lang="th">
+        <head>
+          <meta charset="UTF-8">
+          <title>ตัวอย่าง: ${name}</title>
+          <style>
+            body { font-family: sans-serif; background: #FBF8F1; color: #2B2B2B; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+            .box { max-width: 440px; background: #fff; padding: 30px; border-radius: 18px; border: 2px solid #E7E1D2; text-align: center; }
+            h2 { color: #C9524A; margin-top: 0; }
+            p { color: #6B6560; font-size: 14px; }
+          </style>
+        </head>
+        <body>
+          <div class="box">
+            <h2>ตัวอย่าง: ${name}</h2>
+            <p>${meta}</p>
+            <p style="margin-top:20px; color:#C9524A;">📌 กำลังจัดเตรียมไฟล์ตัวอย่างสำหรับรายการนี้</p>
+          </div>
+        </body>
+        </html>
+      `);
+      w.document.close();
+    }
   }
 
   function renderAccessItemsHtml(items) {
@@ -820,7 +841,7 @@ $initialReviews = [
       const isVideo = (item.meta || '').includes('วิดีโอ');
       let actionHtml;
 
-      // 1. ถ้ามีไฟล์ PDF ตรง (เช่น files/BIOLOGY.pdf) ให้ดาวน์โหลดได้ทันที
+      // 1. ถ้ามีไฟล์ PDF ตรง (เช่น /files/BIOLOGY.pdf) ให้ดาวน์โหลดได้ทันที
       if (item.pdf_url) {
         actionHtml = `<a class="access-btn" href="${item.pdf_url}" download target="_blank" rel="noopener">ดาวน์โหลด PDF</a>`;
       } else if (item.extraLink) {
