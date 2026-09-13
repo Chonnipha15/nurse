@@ -18,7 +18,14 @@ $catalog = [
         'desc'  => 'ซื้อทีละเล่ม เลือกเฉพาะเรื่องที่ต้องการ',
         'items' => [
             ['id' => 'ekg', 'name' => 'การอ่าน EKG เบื้องต้น', 'meta' => 'คอร์สวิดีโอ', 'price' => 150, 'was' => null],
-            ['id' => 'patho1', 'name' => 'Pathology โรคที่พบบ่อยใน ER เล่ม 1', 'meta' => 'เอกสารประกอบการเรียน · PDF', 'price' => 250, 'was' => null],
+            [
+    'id' => 'patho1',
+    'name' => 'Pathology โรคที่พบบ่อยใน ER เล่ม 1',
+    'meta' => 'เอกสารประกอบการเรียน · PDF',
+    'price' => 250,
+    'was' => null,
+    'pdf_url' => 'files/BIOLOGY.pdf'
+],
             ['id' => 'patho2', 'name' => 'Pathology โรค เล่ม 2', 'meta' => 'เอกสารประกอบการเรียน · PDF', 'price' => 250, 'was' => null],
             ['id' => 'ca', 'name' => 'Pathology CA', 'meta' => 'เอกสารประกอบการเรียน · PDF', 'price' => 50, 'was' => null],
             ['id' => 'ob', 'name' => 'Pathology ผดุงครรภ์', 'meta' => 'เอกสารประกอบการเรียน · PDF', 'price' => 50, 'was' => null],
