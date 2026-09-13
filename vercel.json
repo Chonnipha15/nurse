@@ -2,7 +2,7 @@
   "buildCommand": null,
   "outputDirectory": null,
   "functions": {
-    "*.php": {
+    "api/*.php": {
       "runtime": "vercel-php@0.7.3"
     }
   },
@@ -13,15 +13,15 @@
     },
     {
       "src": "/admin",
-      "dest": "/admin.php"
+      "dest": "/admin.html"
     },
     {
-      "src": "/admin.php",
-      "dest": "/admin.php"
+      "src": "/admin.html",
+      "dest": "/admin.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.php"
+      "dest": "/api/index.php"
     }
   ]
 }
