@@ -468,17 +468,21 @@
         label: 'ดูคลิปตัวอย่างการสอน (3 นาที)'
       }
     },
+   {
+  id: 'patho1',
+  name: 'Pathology โรคที่พบบ่อยใน ER เล่ม 1',
+  meta: 'เอกสารประกอบการเรียน · PDF',
+  price: 250,
+  files: [
     {
-      id: 'patho1',
-      name: 'Pathology โรคที่พบบ่อยใน ER เล่ม 1',
-      meta: 'เอกสารประกอบการเรียน · PDF',
-      price: 250,
-      previewFile: {
-        type: 'pdf',
-        url: 'https://rpbyapwseypgzcuesnoi.supabase.co/storage/v1/object/public/nurse-files/previews/patho1_sample.pdf',
-        label: 'อ่านตัวอย่างสารบัญและเนื้อหา (PDF)'
-      }
-    },
+      type: 'pdf',
+      name: fileInput.files[0].name,       // ดึงชื่อไฟล์ เช่น 'sample.pdf'
+      size: fileInput.files[0].size,       // ขนาดไฟล์ (bytes)
+      fileBlob: fileInput.files[0],        // เก็บเป็น File / Blob Object โดยตรง
+      label: 'ไฟล์ PDF จากเครื่อง'
+    }
+  ]
+}
     {
       id: 'patho2',
       name: 'Pathology โรค เล่ม 2',
