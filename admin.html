@@ -170,7 +170,7 @@
       <input type="text" id="sale-note" placeholder="เช่น NER-20260907-0001">
     </div>
     <div class="form-actions">
-      <button class="btn-primary" id="btn-add-sale" onclick="addSale()">บันทึกยอดขาย</button>
+      <button class="btn-primary" id="btn-add-sale">บันทึกยอดขาย</button>
     </div>
   </div>
 
@@ -217,7 +217,7 @@
     <div class="field-row">
       <div class="field">
         <label>ประเภทไฟล์</label>
-        <select id="m-type" onchange="onMaterialTypeChange()">
+        <select id="m-type">
           <option value="pdf">เอกสาร PDF (ชีทสรุป/หนังสือ)</option>
           <option value="image">รูปภาพ (Infographic/ภาพประกอบ)</option>
           <option value="video">วิดีโอ (MP4)</option>
@@ -238,7 +238,7 @@
       <div class="field-note-plain">📌 ไฟล์จะถูกอัปโหลดขึ้น Bucket 'nurse-files' และสร้างลิงก์สำหรับดาวน์โหลด/เปิดดูให้อัตโนมัติ</div>
     </div>
     <div class="form-actions">
-      <button class="btn-primary" id="btn-save-material" onclick="saveLearningMaterial()">อัปโหลดและบันทึกลงฐานข้อมูล</button>
+      <button class="btn-primary" id="btn-save-material">อัปโหลดและบันทึกลงฐานข้อมูล</button>
     </div>
   </div>
 
@@ -275,7 +275,7 @@
     </div>
     <div class="field">
       <label>จำนวนไฟล์ในชุดนี้</label>
-      <input type="number" id="p-file-count" min="1" value="1" oninput="onFileCountChange()">
+      <input type="number" id="p-file-count" min="1" value="1">
     </div>
     <div id="p-pdf-slots"></div>
     <div class="field">
@@ -287,8 +287,8 @@
       <div class="field-note-plain" id="p-extra-link-preview">เลือกไฟล์เพื่ออัปโหลดขึ้น Cloud Storage หรือวางลิงก์ภายนอกแทนได้</div>
     </div>
     <div class="form-actions">
-      <button class="btn-primary" id="btn-save-product" onclick="saveProduct()">บันทึกสินค้า</button>
-      <button class="btn-text hidden" id="cancel-edit-btn" onclick="cancelEdit()">ยกเลิกการแก้ไข</button>
+      <button class="btn-primary" id="btn-save-product">บันทึกสินค้า</button>
+      <button class="btn-text hidden" id="cancel-edit-btn">ยกเลิกการแก้ไข</button>
     </div>
   </div>
 
@@ -600,11 +600,9 @@
   let editingId = null;
 
   function slugify(name) {
-    let base = name.trim().toLowerCase().replace(/[^a-z0-9ก-๙]+/g, '-').replace(/(^-|-$)/g, '');
+    let base = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     if (!base) base = 'item';
-    let id = base, i = 1;
-    while (products.some(p => p.id === id)) { id = base + '-' + (++i); }
-    return id;
+    return `${base}-${Date.now().toString(36)}`;
   }
 
   async function loadProducts() {
@@ -758,7 +756,8 @@
         const input = document.getElementById('p-pdf-slot-' + i);
         const file = input && input.files[0];
         if (file) {
-          const filePath = `products/${Date.now()}_${file.name}`;
+          const safeName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.pdf`;
+          const filePath = `products/${safeName}`;
           const { error: uploadError } = await supabase.storage
             .from('nurse-files')
             .upload(filePath, file);
@@ -783,7 +782,6 @@
           throw new Error('อัปโหลดไฟล์เพิ่มเติมล้มเหลว: ' + extraUploadError.message);
         }
 
-        // ขอ Public URL ของไฟล์ที่อัปโหลด
         const { data: urlData } = supabase.storage
           .from('nurse-files')
           .getPublicUrl(extraPath);
@@ -813,14 +811,29 @@
       cancelEdit();
       await loadProducts();
     } catch (err) {
-      alert('เกิดข้อผิดพลาดในการบันทึก: ' + err.message);
+      console.error('Save Product Error:', err);
+      alert('เกิดข้อผิดพลาดในการบันทึก: ' + (err.message || JSON.stringify(err)));
     } finally {
       saveBtn.textContent = originalBtnText;
       saveBtn.disabled = false;
     }
   }
 
-  // เรียกโหลดข้อมูลจาก Supabase เมื่อเปิดหน้าเว็บ
+  // ผูกฟังก์ชันเข้า Global Window สำหรับปุ่มที่เรียกผ่าน inline onclick
+  window.editProduct = editProduct;
+  window.deleteProduct = deleteProduct;
+  window.deleteSale = deleteSale;
+  window.deleteMaterial = deleteMaterial;
+
+  // ผูก Event Listeners ตรงจุด
+  document.getElementById('btn-save-product').addEventListener('click', saveProduct);
+  document.getElementById('cancel-edit-btn').addEventListener('click', cancelEdit);
+  document.getElementById('btn-add-sale').addEventListener('click', addSale);
+  document.getElementById('btn-save-material').addEventListener('click', saveLearningMaterial);
+  document.getElementById('m-type').addEventListener('change', onMaterialTypeChange);
+  document.getElementById('p-file-count').addEventListener('input', onFileCountChange);
+
+  // เริ่มต้นทำงานทันทีเมื่อเปิดหน้า
   document.getElementById('sale-date').value = todayStr();
   renderFileSlots(1);
   loadSales();
