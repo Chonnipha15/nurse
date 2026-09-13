@@ -454,19 +454,99 @@
   // ---- Product catalog, drawn from the price list ----
   let catalog = [
     {
-      group: 'รายชิ้น',
-      desc: 'ซื้อทีละเล่ม เลือกเฉพาะเรื่องที่ต้องการ',
-      items: [
-        { id: 'ekg', name: 'การอ่าน EKG เบื้องต้น', meta: 'คอร์สวิดีโอ', price: 150 },
-        { id: 'patho1', name: 'Pathology โรคที่พบบ่อยใน ER เล่ม 1', meta: 'เอกสารประกอบการเรียน · PDF', price: 250 },
-        { id: 'patho2', name: 'Pathology โรค เล่ม 2', meta: 'เอกสารประกอบการเรียน · PDF', price: 250 },
-        { id: 'ca', name: 'Pathology CA', meta: 'เอกสารประกอบการเรียน · PDF', price: 50 },
-        { id: 'ob', name: 'Pathology ผดุงครรภ์', meta: 'เอกสารประกอบการเรียน · PDF', price: 50 },
-        { id: 'pedia-newborn', name: 'Pathology Pediatric & Newborn', meta: 'เอกสารประกอบการเรียน · PDF', price: 350 },
-        { id: 'case47', name: '47 Case Study', meta: 'โรคสำคัญใน Medical ICU และตึกอายุรกรรม', price: 490 },
-        { id: 'surgical', name: 'Surgical & ICU Surgical', meta: 'พยาธิสภาพและการพยาบาลกรณีศึกษา', price: 450 },
-      ]
+  group: 'รายชิ้น',
+  desc: 'ซื้อทีละเล่ม เลือกเฉพาะเรื่องที่ต้องการ',
+  items: [
+    {
+      id: 'ekg',
+      name: 'การอ่าน EKG เบื้องต้น',
+      meta: 'คอร์สวิดีโอ',
+      price: 150,
+      previewFile: {
+        type: 'video', // 'video' | 'pdf' | 'image'
+        url: 'https://rpbyapwseypgzcuesnoi.supabase.co/storage/v1/object/public/nurse-files/previews/ekg_preview.mp4',
+        label: 'ดูคลิปตัวอย่างการสอน (3 นาที)'
+      }
     },
+    {
+      id: 'patho1',
+      name: 'Pathology โรคที่พบบ่อยใน ER เล่ม 1',
+      meta: 'เอกสารประกอบการเรียน · PDF',
+      price: 250,
+      previewFile: {
+        type: 'pdf',
+        url: 'https://rpbyapwseypgzcuesnoi.supabase.co/storage/v1/object/public/nurse-files/previews/patho1_sample.pdf',
+        label: 'อ่านตัวอย่างสารบัญและเนื้อหา (PDF)'
+      }
+    },
+    {
+      id: 'patho2',
+      name: 'Pathology โรค เล่ม 2',
+      meta: 'เอกสารประกอบการเรียน · PDF',
+      price: 250,
+      previewFile: {
+        type: 'pdf',
+        url: 'https://rpbyapwseypgzcuesnoi.supabase.co/storage/v1/object/public/nurse-files/previews/patho2_sample.pdf',
+        label: 'อ่านตัวอย่างเนื้อหา เล่ม 2 (PDF)'
+      }
+    },
+    {
+      id: 'ca',
+      name: 'Pathology CA',
+      meta: 'เอกสารประกอบการเรียน · PDF',
+      price: 50,
+      previewFile: {
+        type: 'image',
+        url: 'https://rpbyapwseypgzcuesnoi.supabase.co/storage/v1/object/public/nurse-files/previews/ca_infographic.png',
+        label: 'ดูตัวอย่างผังเนื้อหา (Infographic)'
+      }
+    },
+    {
+      id: 'ob',
+      name: 'Pathology ผดุงครรภ์',
+      meta: 'เอกสารประกอบการเรียน · PDF',
+      price: 50,
+      previewFile: {
+        type: 'pdf',
+        url: 'https://rpbyapwseypgzcuesnoi.supabase.co/storage/v1/object/public/nurse-files/previews/ob_sample.pdf',
+        label: 'อ่านตัวอย่างเนื้อหาผดุงครรภ์'
+      }
+    },
+    {
+      id: 'pedia-newborn',
+      name: 'Pathology Pediatric & Newborn',
+      meta: 'เอกสารประกอบการเรียน · PDF',
+      price: 350,
+      previewFile: {
+        type: 'pdf',
+        url: 'https://rpbyapwseypgzcuesnoi.supabase.co/storage/v1/object/public/nurse-files/previews/pedia_sample.pdf',
+        label: 'อ่านตัวอย่าง Pediatric (PDF)'
+      }
+    },
+    {
+      id: 'case47',
+      name: '47 Case Study',
+      meta: 'โรคสำคัญใน Medical ICU และตึกอายุรกรรม',
+      price: 490,
+      previewFile: {
+        type: 'pdf',
+        url: 'https://rpbyapwseypgzcuesnoi.supabase.co/storage/v1/object/public/nurse-files/previews/case47_sample.pdf',
+        label: 'อ่านเคสตัวอย่าง 3 เคสแรก'
+      }
+    },
+    {
+      id: 'surgical',
+      name: 'Surgical & ICU Surgical',
+      meta: 'พยาธิสภาพและการพยาบาลกรณีศึกษา',
+      price: 450,
+      previewFile: {
+        type: 'pdf',
+        url: 'https://rpbyapwseypgzcuesnoi.supabase.co/storage/v1/object/public/nurse-files/previews/surgical_sample.pdf',
+        label: 'อ่านตัวอย่างพยาธิสภาพผ่าตัด'
+      }
+    }
+  ]
+},
     {
       group: 'ชุดคอมโบ คุ้มกว่าซื้อแยก',
       desc: 'รวมหลายเล่มในราคาพิเศษ',
@@ -516,21 +596,29 @@
     return 'data:text/html,' + encodeURIComponent(html);
   }
 
-  function renderPreviews() {
-    const container = document.getElementById('preview-grid');
-    if (!container) return;
-    container.innerHTML = previewSamples.map(s => {
-      const isVideo = s.meta.includes('วิดีโอ');
-      return `
-        <div class="preview-card">
-          <div class="preview-icon">${isVideo ? '🎬' : '📄'}</div>
-          <div class="preview-name">${s.name}</div>
-          <div class="preview-meta">${s.meta}</div>
-          <a class="preview-btn" href="${makePreviewUrl(s)}" target="_blank" rel="noopener">ดูตัวอย่าง</a>
-        </div>
-      `;
-    }).join('');
-  }
+  function renderPreviewButton(item) {
+  if (!item.previewFile || !item.previewFile.url) return '';
+
+  const icons = {
+    pdf: '📄',
+    image: '🖼️',
+    video: '🎬'
+  };
+
+  const icon = icons[item.previewFile.type] || '📎';
+
+  return `
+    <div style="margin-top: 8px;">
+      <a href="${item.previewFile.url}" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         style="display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--red); text-decoration: none; background: var(--red-soft); padding: 4px 10px; border-radius: 999px; font-weight: 500;">
+        <span>${icon}</span>
+        <span>${item.previewFile.label || 'ดูตัวอย่างเนื้อหา'}</span>
+      </a>
+    </div>
+  `;
+}
 
   // ---- Reviews ----
   const reviews = [
