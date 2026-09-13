@@ -625,8 +625,8 @@ $initialReviews = [
   // 1. ตั้งค่า Configuration
   const SUPABASE_URL = "https://rpbyapwseypgzcuesnoi.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwYnlhcHdzZXlwZ3pjdWVzbm9pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyODE0MjgsImV4cCI6MjEwNDg1NzQyOH0.nFcP1PYQSSwM8ZEoMJFiNEQC2JhmLBImOgk6i_rvlkI";
-  const supabase = (window.supabase && SUPABASE_URL) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
-
+window.supabaseClient = window.supabaseClient || ((window.supabase && SUPABASE_URL) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null);
+var supabase = window.supabaseClient;
   // 2. ข้อมูลสินค้า (Pure JavaScript ไม่ต้องผ่าน PHP)
   const catalog = [
     {
