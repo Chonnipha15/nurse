@@ -66,48 +66,13 @@ $previewSamples = [
         'icon' => '📄',
         'url'  => '/files/BIOLOGY.pdf'
     ],
-    [
-        'name' => 'Pathology โรค เล่ม 2',
-        'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF',
-        'icon' => '📄',
-        'url'  => ''
-    ],
-    [
-        'name' => 'การอ่าน EKG เบื้องต้น',
-        'meta' => 'ตัวอย่างคลิปสั้น · วิดีโอ',
-        'icon' => '🎬',
-        'url'  => ''
-    ],
-    [
-        'name' => 'Pathology ผดุงครรภ์',
-        'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF',
-        'icon' => '📄',
-        'url'  => ''
-    ],
-    [
-        'name' => 'Pathology Pediatric & Newborn',
-        'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF',
-        'icon' => '📄',
-        'url'  => ''
-    ],
-    [
-        'name' => 'Pathology CA',
-        'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF',
-        'icon' => '📄',
-        'url'  => ''
-    ],
-    [
-        'name' => '47 Case Study',
-        'meta' => 'ตัวอย่าง 1 เคส · Medical & ICU · PDF',
-        'icon' => '📄',
-        'url'  => ''
-    ],
-    [
-        'name' => 'Surgical & ICU Surgical',
-        'meta' => 'ตัวอย่าง 1 เคส · PDF',
-        'icon' => '📄',
-        'url'  => ''
-    ],
+    ['name' => 'Pathology โรค เล่ม 2', 'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF', 'icon' => '📄', 'url' => ''],
+    ['name' => 'การอ่าน EKG เบื้องต้น', 'meta' => 'ตัวอย่างคลิปสั้น · วิดีโอ', 'icon' => '🎬', 'url' => ''],
+    ['name' => 'Pathology ผดุงครรภ์', 'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF', 'icon' => '📄', 'url' => ''],
+    ['name' => 'Pathology Pediatric & Newborn', 'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF', 'icon' => '📄', 'url' => ''],
+    ['name' => 'Pathology CA', 'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF', 'icon' => '📄', 'url' => ''],
+    ['name' => '47 Case Study', 'meta' => 'ตัวอย่าง 1 เคส · Medical & ICU · PDF', 'icon' => '📄', 'url' => ''],
+    ['name' => 'Surgical & ICU Surgical', 'meta' => 'ตัวอย่าง 1 เคส · PDF', 'icon' => '📄', 'url' => ''],
 ];
 
 // 3. รีวิวเริ่มต้น
@@ -126,122 +91,57 @@ $initialReviews = [
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- นำเข้า Supabase JS Client สำหรับเชื่อมต่อฐานข้อมูล -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
-    --cream: #FBF8F1;
-    --panel: #FFFFFF;
-    --ink: #2B2B2B;
-    --ink-soft: #6B6560;
-    --line: #E7E1D2;
-    --red: #C9524A;
-    --red-soft: #F7E3E1;
-    --green-soft: #5B7A52;
+    --cream: #FBF8F1; --panel: #FFFFFF; --ink: #2B2B2B; --ink-soft: #6B6560;
+    --line: #E7E1D2; --red: #C9524A; --red-soft: #F7E3E1; --green-soft: #5B7A52;
   }
-
   * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    background: var(--cream);
-    color: var(--ink);
-    font-family: 'Sarabun', sans-serif;
-    line-height: 1.6;
-  }
-
+  body { margin: 0; background: var(--cream); color: var(--ink); font-family: 'Sarabun', sans-serif; line-height: 1.6; }
   h1, h2, h3, .brand { font-family: 'Mali', sans-serif; font-weight: 600; margin: 0; }
-
   .wrap { max-width: 1040px; margin: 0 auto; padding: 32px 20px 90px; }
-
-  header.site {
-    display: flex; align-items: center; justify-content: space-between;
-    padding-bottom: 20px; border-bottom: 2px solid var(--line); margin-bottom: 28px;
-    flex-wrap: wrap; gap: 14px;
-  }
-
+  header.site { display: flex; align-items: center; justify-content: space-between; padding-bottom: 20px; border-bottom: 2px solid var(--line); margin-bottom: 28px; flex-wrap: wrap; gap: 14px; }
   .brand-group { display: flex; align-items: center; gap: 10px; }
   .brand { font-size: 22px; letter-spacing: 0.01em; }
   .brand span { color: var(--red); }
   .brand small { display: block; font-family: 'Sarabun', sans-serif; font-size: 12px; font-weight: 400; color: var(--ink-soft); margin-top: 2px; }
-
   .stepper { display: flex; gap: 6px; font-size: 13px; color: var(--ink-soft); flex-wrap: wrap; font-family: 'Mali', sans-serif; }
   .stepper .step { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; }
   .stepper .step.active { background: var(--red-soft); color: var(--red); font-weight: 600; }
   .stepper .divider { color: var(--line); padding-top: 5px; }
-
-  .cart-fab {
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 16px; border: 2px solid var(--ink); border-radius: 999px;
-    cursor: pointer; font-size: 14px; background: var(--panel); font-family: 'Mali', sans-serif; font-weight: 600;
-  }
-  .cart-fab .count {
-    background: var(--red); color: #fff; border-radius: 999px;
-    min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;
-    font-size: 12px; padding: 0 5px;
-  }
-
+  .cart-fab { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border: 2px solid var(--ink); border-radius: 999px; cursor: pointer; font-size: 14px; background: var(--panel); font-family: 'Mali', sans-serif; font-weight: 600; }
+  .cart-fab .count { background: var(--red); color: #fff; border-radius: 999px; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; padding: 0 5px; }
   h1.page-title { font-size: 30px; margin-bottom: 4px; }
   .subtitle { color: var(--ink-soft); font-size: 14px; margin-bottom: 24px; }
-
   .layout { display: grid; grid-template-columns: 1.6fr 1fr; gap: 28px; align-items: start; }
   @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
-
   .panel { background: var(--panel); border: 2px solid var(--line); border-radius: 18px; }
-
-  /* Sample/preview files */
   .preview-section { margin-bottom: 36px; padding-bottom: 28px; border-bottom: 2px dashed var(--line); }
   .preview-section h2 { font-size: 19px; margin-bottom: 4px; }
   .preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
   @media (max-width: 860px) { .preview-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 600px) { .preview-grid { grid-template-columns: 1fr; } }
-
-  .preview-card {
-    border: 2px solid var(--line); border-radius: 16px; padding: 16px;
-    background: var(--panel); display: flex; flex-direction: column; gap: 8px;
-  }
+  .preview-card { border: 2px solid var(--line); border-radius: 16px; padding: 16px; background: var(--panel); display: flex; flex-direction: column; gap: 8px; }
   .preview-icon { font-size: 22px; }
   .preview-name { font-size: 14.5px; font-weight: 600; font-family: 'Mali', sans-serif; }
   .preview-meta { font-size: 12px; color: var(--ink-soft); }
-  .preview-btn {
-    margin-top: 4px; padding: 8px 12px; border-radius: 999px; font-size: 13px;
-    font-family: 'Mali', sans-serif; font-weight: 600; cursor: pointer; border: 2px solid var(--ink);
-    background: transparent; color: var(--ink); text-align: center; text-decoration: none; display: inline-block;
-  }
+  .preview-btn { margin-top: 4px; padding: 8px 12px; border-radius: 999px; font-size: 13px; font-family: 'Mali', sans-serif; font-weight: 600; cursor: pointer; border: 2px solid var(--ink); background: transparent; color: var(--ink); text-align: center; text-decoration: none; display: inline-block; }
   .preview-btn:hover { background: var(--ink); color: #fff; }
-
-  /* Catalog */
   .cat-group { margin-bottom: 32px; }
   .cat-group h2 { font-size: 19px; margin-bottom: 4px; }
   .cat-group .cat-desc { font-size: 13px; color: var(--ink-soft); margin-bottom: 14px; }
-
   .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
   @media (max-width: 640px) { .product-grid { grid-template-columns: 1fr; } }
-
-  .product-card {
-    border: 2px solid var(--line); border-radius: 16px; padding: 16px;
-    background: var(--panel); display: flex; flex-direction: column; gap: 8px;
-  }
-
+  .product-card { border: 2px solid var(--line); border-radius: 16px; padding: 16px; background: var(--panel); display: flex; flex-direction: column; gap: 8px; }
   .product-name { font-size: 15px; font-weight: 600; font-family: 'Mali', sans-serif; }
   .product-meta { font-size: 12.5px; color: var(--ink-soft); }
-
   .price-row { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; flex-wrap: wrap; }
   .price-now { font-size: 17px; font-weight: 700; color: var(--red); font-family: 'Mali', sans-serif; }
   .price-was { font-size: 13px; color: var(--ink-soft); text-decoration: line-through; }
-  .save-badge {
-    font-size: 11.5px; color: var(--green-soft); background: #EAF0E6;
-    padding: 2px 8px; border-radius: 999px; margin-left: auto;
-  }
-
-  .add-btn {
-    margin-top: 4px; padding: 9px 12px; border-radius: 999px; font-size: 14px;
-    font-family: 'Mali', sans-serif; font-weight: 600; cursor: pointer; border: 2px solid var(--ink);
-    background: transparent; color: var(--ink);
-  }
+  .save-badge { font-size: 11.5px; color: var(--green-soft); background: #EAF0E6; padding: 2px 8px; border-radius: 999px; margin-left: auto; }
+  .add-btn { margin-top: 4px; padding: 9px 12px; border-radius: 999px; font-size: 14px; font-family: 'Mali', sans-serif; font-weight: 600; cursor: pointer; border: 2px solid var(--ink); background: transparent; color: var(--ink); }
   .add-btn.in-cart { background: var(--red); border-color: var(--red); color: #fff; }
-
-  /* Cart items */
   .item-row { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-bottom: 1px dashed var(--line); }
   .item-row:last-child { border-bottom: none; }
   .item-name { font-size: 16px; font-weight: 600; font-family: 'Mali', sans-serif; }
@@ -250,128 +150,71 @@ $initialReviews = [
   .remove-btn { background: none; border: none; color: var(--ink-soft); font-size: 13px; text-decoration: underline; cursor: pointer; padding: 0; }
   .remove-btn:hover { color: var(--red); }
   .empty-cart { padding: 50px 20px 60px; text-align: center; color: var(--ink-soft); }
-
-  /* Summary card */
   .summary { padding: 24px; position: sticky; top: 20px; }
   .summary h3 { font-size: 18px; margin-bottom: 18px; }
   .summary-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; color: var(--ink-soft); }
   .summary-row.total { font-size: 19px; color: var(--ink); font-weight: 700; padding-top: 14px; margin-top: 6px; border-top: 2px dashed var(--line); font-family: 'Mali', sans-serif; }
   .summary-row.total span:last-child { color: var(--red); }
-
-  .btn-primary {
-    width: 100%; padding: 14px; background: var(--red); color: #fff; border: none;
-    border-radius: 999px; font-family: 'Mali', sans-serif; font-size: 16px; font-weight: 700;
-    cursor: pointer; margin-top: 8px;
-  }
+  .btn-primary { width: 100%; padding: 14px; background: var(--red); color: #fff; border: none; border-radius: 999px; font-family: 'Mali', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; }
   .btn-primary:hover { background: #B23F38; }
   .btn-primary:disabled { background: var(--line); color: var(--ink-soft); cursor: not-allowed; }
-
-  .btn-outline {
-    padding: 10px 18px; border: 2px solid var(--ink); background: transparent; color: var(--ink);
-    border-radius: 999px; font-family: 'Mali', sans-serif; font-weight: 600; font-size: 14px; cursor: pointer;
-    text-decoration: none; display: inline-block;
-  }
-
+  .btn-outline { padding: 10px 18px; border: 2px solid var(--ink); background: transparent; color: var(--ink); border-radius: 999px; font-family: 'Mali', sans-serif; font-weight: 600; font-size: 14px; cursor: pointer; text-decoration: none; display: inline-block; }
   .back-link { display: inline-block; color: var(--ink-soft); font-size: 14px; text-decoration: none; margin-bottom: 16px; cursor: pointer; }
   .back-link:hover { color: var(--red); }
-
-  /* Checkout form */
   .form-panel { padding: 24px; }
   .field { margin-bottom: 18px; }
   .field label { display: block; font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }
-  .field input {
-    width: 100%; padding: 11px 14px; border: 2px solid var(--line); border-radius: 12px;
-    font-family: 'Sarabun', sans-serif; font-size: 15px; background: var(--cream);
-  }
+  .field input { width: 100%; padding: 11px 14px; border: 2px solid var(--line); border-radius: 12px; font-family: 'Sarabun', sans-serif; font-size: 15px; background: var(--cream); }
   .field input:focus { outline: none; border-color: var(--red); }
   .field-error { font-size: 12px; color: var(--red); margin-top: 5px; display: none; }
   .field-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 6px; background: var(--red-soft); padding: 8px 10px; border-radius: 8px; }
   .field.invalid input { border-color: var(--red); }
   .field.invalid .field-error { display: block; }
-
   .mini-item { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; }
   .mini-item .name { color: var(--ink); }
   .mini-item .price { color: var(--ink-soft); }
-
-  /* Confirmation */
   .confirm-panel { padding: 44px 32px; text-align: center; }
-  .order-id {
-    display: inline-block; font-weight: 700; letter-spacing: 0.03em; background: var(--cream);
-    border: 2px dashed var(--line); padding: 8px 18px; border-radius: 999px; margin: 14px 0 24px;
-    font-family: 'Mali', sans-serif; color: var(--red);
-  }
+  .order-id { display: inline-block; font-weight: 700; letter-spacing: 0.03em; background: var(--cream); border: 2px dashed var(--line); padding: 8px 18px; border-radius: 999px; margin: 14px 0 24px; font-family: 'Mali', sans-serif; color: var(--red); }
   .confirm-detail { text-align: left; max-width: 360px; margin: 0 auto 28px; padding-top: 20px; border-top: 2px dashed var(--line); }
   .status-note { font-size: 13px; color: var(--ink-soft); background: var(--red-soft); padding: 10px 14px; border-radius: 999px; margin-bottom: 24px; display: inline-block; }
-
-  /* Reviews */
   .reviews-section { margin-top: 44px; padding-top: 32px; border-top: 2px dashed var(--line); }
   .reviews-section h2 { font-size: 20px; margin-bottom: 4px; }
   .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px; }
   @media (max-width: 860px) { .reviews-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 600px) { .reviews-grid { grid-template-columns: 1fr; } }
-
-  .review-card {
-    border: 2px solid var(--line); border-radius: 16px; padding: 18px;
-    background: var(--panel); display: flex; flex-direction: column; gap: 8px;
-  }
-
+  .review-card { border: 2px solid var(--line); border-radius: 16px; padding: 18px; background: var(--panel); display: flex; flex-direction: column; gap: 8px; }
   .review-stars { color: var(--red); font-size: 14px; letter-spacing: 2px; }
   .review-text { font-size: 13.5px; color: var(--ink); }
   .review-who { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
-  .review-avatar {
-    width: 30px; height: 30px; border-radius: 50%; background: var(--red-soft);
-    display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;
-  }
+  .review-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--red-soft); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
   .review-name { font-size: 13px; font-weight: 600; font-family: 'Mali', sans-serif; }
   .review-role { font-size: 11.5px; color: var(--ink-soft); }
-
-  .review-form {
-    margin-top: 28px; padding: 22px; border: 2px solid var(--line); border-radius: 18px;
-    background: var(--panel); max-width: 480px;
-  }
+  .review-form { margin-top: 28px; padding: 22px; border: 2px solid var(--line); border-radius: 18px; background: var(--panel); max-width: 480px; }
   .review-form h3 { font-size: 17px; margin-bottom: 14px; }
   .rating-picker { font-size: 26px; color: var(--line); margin-bottom: 16px; cursor: pointer; }
   .rating-picker .star { transition: color 0.1s; }
   .rating-picker .star.active { color: var(--red); }
-  .review-form textarea {
-    width: 100%; padding: 11px 14px; border: 2px solid var(--line); border-radius: 12px;
-    font-family: 'Sarabun', sans-serif; font-size: 14px; background: var(--cream); resize: vertical;
-  }
+  .review-form textarea { width: 100%; padding: 11px 14px; border: 2px solid var(--line); border-radius: 12px; font-family: 'Sarabun', sans-serif; font-size: 14px; background: var(--cream); resize: vertical; }
   .review-form textarea:focus { outline: none; border-color: var(--red); }
   .review-submit { width: auto; padding: 11px 22px; }
   .review-thanks { margin-top: 12px; font-size: 13.5px; color: var(--green-soft); }
-
   .hidden { display: none; }
-
-  /* Payment */
   .pay-section-title { font-size: 15px; font-weight: 600; font-family: 'Mali', sans-serif; margin: 28px 0 14px; }
   .pay-panel { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
-  .bank-details {
-    border: 2px solid var(--line); border-radius: 16px; padding: 16px 20px; width: 100%;
-  }
+  .bank-details { border: 2px solid var(--line); border-radius: 16px; padding: 16px 20px; width: 100%; }
   .bank-row { display: flex; justify-content: space-between; font-size: 14px; padding: 8px 0; border-bottom: 1px dashed var(--line); color: var(--ink-soft); }
   .bank-row:last-child { border-bottom: none; }
   .bank-row strong { color: var(--ink); font-family: 'Mali', sans-serif; }
-
   .slip-upload { margin: 8px 0 20px; }
   .slip-label { display: inline-block; }
   .slip-filename { margin-top: 10px; font-size: 13px; color: var(--ink-soft); }
-
-  /* Access */
   .access-list { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
-  .access-item {
-    display: flex; align-items: center; gap: 14px; padding: 16px 18px;
-    border: 2px solid var(--line); border-radius: 16px;
-  }
+  .access-item { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 2px solid var(--line); border-radius: 16px; }
   .access-icon { font-size: 26px; flex-shrink: 0; }
   .access-info { flex: 1; }
   .access-name { font-weight: 600; font-family: 'Mali', sans-serif; font-size: 15px; }
   .access-meta { font-size: 12.5px; color: var(--ink-soft); }
-  .access-btn {
-    padding: 9px 16px; border-radius: 999px; border: none; background: var(--red); color: #fff;
-    font-family: 'Mali', sans-serif; font-weight: 600; font-size: 13.5px; cursor: pointer; white-space: nowrap;
-    text-decoration: none; display: inline-block;
-  }
+  .access-btn { padding: 9px 16px; border-radius: 999px; border: none; background: var(--red); color: #fff; font-family: 'Mali', sans-serif; font-weight: 600; font-size: 13.5px; cursor: pointer; white-space: nowrap; text-decoration: none; display: inline-block; }
 </style>
 </head>
 <body>
@@ -408,15 +251,10 @@ $initialReviews = [
             <div class="preview-icon"><?= htmlspecialchars($sample['icon']) ?></div>
             <div class="preview-name"><?= htmlspecialchars($sample['name']) ?></div>
             <div class="preview-meta"><?= htmlspecialchars($sample['meta']) ?></div>
-            
             <?php if (!empty($sample['url'])): ?>
-              <a class="preview-btn" href="<?= htmlspecialchars($sample['url']) ?>" target="_blank" rel="noopener noreferrer">
-                ดูตัวอย่าง
-              </a>
+              <a class="preview-btn" href="<?= htmlspecialchars($sample['url']) ?>" target="_blank" rel="noopener noreferrer">ดูตัวอย่าง</a>
             <?php else: ?>
-              <a class="preview-btn" href="#" onclick="openPreview('<?= htmlspecialchars(addslashes($sample['name'])) ?>', '<?= htmlspecialchars(addslashes($sample['meta'])) ?>'); return false;">
-                ดูตัวอย่าง
-              </a>
+              <a class="preview-btn" href="#" onclick="openPreview('<?= htmlspecialchars(addslashes($sample['name'])) ?>', '<?= htmlspecialchars(addslashes($sample['meta'])) ?>'); return false;">ดูตัวอย่าง</a>
             <?php endif; ?>
           </div>
         <?php endforeach; ?>
@@ -622,12 +460,11 @@ $initialReviews = [
 </div>
 
 <script>
-  // 1. ตั้งค่า Configuration
   const SUPABASE_URL = "https://rpbyapwseypgzcuesnoi.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwYnlhcHdzZXlwZ3pjdWVzbm9pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyODE0MjgsImV4cCI6MjEwNDg1NzQyOH0.nFcP1PYQSSwM8ZEoMJFiNEQC2JhmLBImOgk6i_rvlkI";
-window.supabaseClient = window.supabaseClient || ((window.supabase && SUPABASE_URL) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null);
-var supabase = window.supabaseClient;
-  // 2. ข้อมูลสินค้า (Pure JavaScript ไม่ต้องผ่าน PHP)
+  window.supabaseClient = window.supabaseClient || ((window.supabase && SUPABASE_URL) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null);
+  var supabase = window.supabaseClient;
+
   const catalog = [
     {
       group: 'รายชิ้น',
@@ -671,9 +508,7 @@ var supabase = window.supabaseClient;
   if (Array.isArray(catalog)) {
     catalog.forEach(function(g) {
       if (g && Array.isArray(g.items)) {
-        g.items.forEach(function(p) {
-          productIndex[p.id] = p;
-        });
+        g.items.forEach(function(p) { productIndex[p.id] = p; });
       }
     });
   }
@@ -688,26 +523,16 @@ var supabase = window.supabaseClient;
 
   function toggleCart(id) {
     let item = productIndex[id];
-
-    // Fallback: หากหาในดัชนีไม่พบ ให้วนหาจาก catalog
     if (!item && Array.isArray(catalog)) {
       for (const g of catalog) {
         const found = g.items.find(x => x.id === id);
         if (found) { item = found; break; }
       }
     }
-
-    if (!item) {
-      console.error('ไม่พบสินค้า ID:', id);
-      return;
-    }
-
+    if (!item) { console.error('ไม่พบสินค้า ID:', id); return; }
     const index = cart.findIndex(x => x.id === id);
-    if (index > -1) {
-      cart.splice(index, 1);
-    } else {
-      cart.push(item);
-    }
+    if (index > -1) cart.splice(index, 1);
+    else cart.push(item);
     updateCartUI();
   }
 
@@ -719,8 +544,6 @@ var supabase = window.supabaseClient;
   function updateCartUI() {
     const countEl = document.getElementById('cart-count');
     if (countEl) countEl.textContent = cart.length;
-
-    // อัปเดตสถานะปุ่มบนหน้าเว็บ
     Object.keys(productIndex).forEach(id => {
       const btn = document.getElementById('btn-' + id);
       if (btn) {
@@ -729,14 +552,12 @@ var supabase = window.supabaseClient;
         btn.textContent = inCart ? '✓ อยู่ในตะกร้าแล้ว — นำออก' : 'เพิ่มลงตะกร้า';
       }
     });
-
     renderCart();
   }
 
   function renderCart() {
     const list = document.getElementById('cart-list');
     if (!list) return;
-
     if (cart.length === 0) {
       list.innerHTML = `
         <div class="empty-cart">
@@ -755,10 +576,8 @@ var supabase = window.supabaseClient;
         </div>
       `).join('');
     }
-
     const totalEl = document.getElementById('cart-total');
     if (totalEl) totalEl.textContent = money(subtotal());
-
     const checkoutBtn = document.getElementById('cart-checkout-btn');
     if (checkoutBtn) checkoutBtn.disabled = cart.length === 0;
   }
@@ -798,7 +617,6 @@ var supabase = window.supabaseClient;
 
   function goToPayment() {
     if (cart.length === 0) return;
-
     currentOrderId = generateOrderId();
     document.getElementById('order-id-display').textContent = currentOrderId;
     document.getElementById('confirm-items').innerHTML = cart.map(item => `
@@ -861,11 +679,7 @@ var supabase = window.supabaseClient;
   }
 
   function openPreview(name, meta, url = '') {
-    if (url) {
-      window.open(url, '_blank');
-      return;
-    }
-
+    if (url) { window.open(url, '_blank'); return; }
     const w = window.open('', '_blank');
     if (w) {
       w.document.write(`
@@ -898,7 +712,6 @@ var supabase = window.supabaseClient;
     return items.map(item => {
       const isVideo = (item.meta || '').includes('วิดีโอ');
       let actionHtml;
-
       if (item.pdf_url) {
         actionHtml = `<a class="access-btn" href="${item.pdf_url}" download target="_blank" rel="noopener">ดาวน์โหลด PDF</a>`;
       } else if (item.extraLink) {
@@ -908,7 +721,6 @@ var supabase = window.supabaseClient;
       } else {
         actionHtml = `<button class="access-btn" onclick="openPreview('${item.name}', '${item.meta}')">เปิดอ่าน PDF</button>`;
       }
-
       return `
         <div class="access-item">
           <div class="access-icon">${isVideo ? '🎬' : '📄'}</div>
@@ -928,14 +740,12 @@ var supabase = window.supabaseClient;
 
     if (supabase) {
       try {
-        await supabase.from('orders').insert([
-          {
-            order_code: currentOrderId,
-            customer_email: order ? order.email : 'guest@nurseer.com',
-            total_amount: subtotal(),
-            status: 'confirmed'
-          }
-        ]);
+        await supabase.from('orders').insert([{
+          order_code: currentOrderId,
+          customer_email: order ? order.email : 'guest@nurseer.com',
+          total_amount: subtotal(),
+          status: 'confirmed'
+        }]);
       } catch (e) {
         console.warn('บันทึกคำสั่งซื้อลง Supabase ไม่สำเร็จ:', e.message);
       }
@@ -943,7 +753,6 @@ var supabase = window.supabaseClient;
 
     const email = order ? order.email : null;
     const accessibleItems = email ? getAccessibleItemsForEmail(email) : cart;
-
     document.getElementById('access-list').innerHTML = renderAccessItemsHtml(accessibleItems);
     goTo('access');
   }
@@ -959,18 +768,13 @@ var supabase = window.supabaseClient;
     const email = document.getElementById('member-email').value.trim().toLowerCase();
     const emailOk = validateField('field-member-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
     const resultBox = document.getElementById('member-result');
-    if (!emailOk) {
-      resultBox.innerHTML = '';
-      return;
-    }
+    if (!emailOk) { resultBox.innerHTML = ''; return; }
 
     const items = getAccessibleItemsForEmail(email);
-
     if (items.length === 0) {
       resultBox.innerHTML = `<div class="status-note" style="background:var(--red-soft); color:var(--red);">ไม่พบไฟล์ที่เข้าถึงได้สำหรับอีเมลนี้ กรุณาตรวจสอบอีเมลที่ใช้ตอนสั่งซื้อ หรืออาจยังไม่ได้รับการยืนยันการชำระเงิน</div>`;
       return;
     }
-
     resultBox.innerHTML = `
       <p class="subtitle">พบสิทธิ์เข้าถึง ${items.length} รายการ สำหรับอีเมลนี้ (รวมทุกคำสั่งซื้อที่ยืนยันแล้ว)</p>
       <div class="access-list">${renderAccessItemsHtml(items)}</div>
@@ -983,22 +787,18 @@ var supabase = window.supabaseClient;
     goTo('catalog');
   }
 
-  // ระบบ Review
   let selectedRating = 0;
   const stars = document.querySelectorAll('#rating-picker .star');
   stars.forEach(star => {
     star.addEventListener('click', () => {
       selectedRating = parseInt(star.dataset.value, 10);
-      stars.forEach(s => {
-        s.classList.toggle('active', parseInt(s.dataset.value, 10) <= selectedRating);
-      });
+      stars.forEach(s => s.classList.toggle('active', parseInt(s.dataset.value, 10) <= selectedRating));
     });
   });
 
   function submitReview() {
     const name = document.getElementById('review-name').value.trim();
     const text = document.getElementById('review-text').value.trim();
-
     const nameOk = validateField('field-review-name', name.length > 0);
     const textOk = validateField('field-review-text', text.length > 0);
     if (!(nameOk && textOk)) return;
@@ -1030,7 +830,6 @@ var supabase = window.supabaseClient;
     setTimeout(() => thanks.classList.add('hidden'), 3000);
   }
 
-  // เริ่มต้นเรียกทำงาน
   updateCartUI();
 </script>
 
