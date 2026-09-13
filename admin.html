@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nurse ER — Admin จัดการระบบหลังบ้าน</title>
+<title>Nurse ER — Admin จัดการสินค้า</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
@@ -17,9 +17,6 @@
     --red: #C9524A;
     --red-soft: #F7E3E1;
     --green-soft: #5B7A52;
-    --green-bg: #EAF0E6;
-    --yellow-soft: #FFF4DE;
-    --yellow-ink: #B78103;
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--cream); color: var(--ink); font-family: 'Sarabun', sans-serif; line-height: 1.6; }
@@ -29,7 +26,7 @@
 
   header.site {
     display: flex; align-items: center; justify-content: space-between;
-    padding-bottom: 20px; border-bottom: 2px solid var(--line); margin-bottom: 20px; flex-wrap: wrap; gap: 14px;
+    padding-bottom: 20px; border-bottom: 2px solid var(--line); margin-bottom: 10px; flex-wrap: wrap; gap: 14px;
   }
   .brand-group { display: flex; align-items: center; gap: 10px; }
   .brand { font-size: 22px; }
@@ -45,7 +42,7 @@
     border-radius: 10px; margin-bottom: 28px;
   }
 
-  h1.page-title { font-size: 26px; margin-bottom: 4px; margin-top: 20px; }
+  h1.page-title { font-size: 26px; margin-bottom: 4px; }
   .subtitle { color: var(--ink-soft); font-size: 14px; margin-bottom: 20px; }
 
   .panel { background: var(--panel); border: 2px solid var(--line); border-radius: 18px; padding: 22px; margin-bottom: 28px; }
@@ -66,44 +63,19 @@
   @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
 
   .btn-primary {
-    padding: 10px 18px; background: var(--red); color: #fff; border: none; border-radius: 999px;
-    font-family: 'Mali', sans-serif; font-size: 13.5px; font-weight: 700; cursor: pointer;
+    padding: 11px 20px; background: var(--red); color: #fff; border: none; border-radius: 999px;
+    font-family: 'Mali', sans-serif; font-size: 14.5px; font-weight: 700; cursor: pointer;
   }
   .btn-primary:hover { background: #B23F38; }
-  .btn-success {
-    padding: 8px 14px; background: var(--green-soft); color: #fff; border: none; border-radius: 999px;
-    font-family: 'Mali', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer;
-  }
-  .btn-success:hover { background: #476140; }
   .btn-outline {
-    padding: 8px 16px; border: 2px solid var(--ink); background: transparent; color: var(--ink);
+    padding: 10px 18px; border: 2px solid var(--ink); background: transparent; color: var(--ink);
     border-radius: 999px; font-family: 'Mali', sans-serif; font-weight: 600; font-size: 13.5px; cursor: pointer;
-    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
   }
   .btn-text { border: none; background: none; color: var(--ink-soft); font-size: 13px; text-decoration: underline; cursor: pointer; padding: 0; }
   .btn-text:hover { color: var(--red); }
   .btn-text.danger:hover { color: var(--red); }
 
   .form-actions { display: flex; gap: 10px; align-items: center; margin-top: 6px; }
-
-  /* Orders section */
-  .order-card {
-    border: 2px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 12px;
-    background: var(--panel); display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap;
-  }
-  .order-info { flex: 1; min-width: 260px; }
-  .order-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
-  .order-id { font-family: 'Mali', sans-serif; font-weight: 700; color: var(--ink); }
-  .badge-status {
-    font-size: 11.5px; padding: 2px 10px; border-radius: 999px; font-family: 'Mali', sans-serif; font-weight: 600;
-  }
-  .badge-status.pending { background: var(--yellow-soft); color: var(--yellow-ink); }
-  .badge-status.confirmed { background: var(--green-bg); color: var(--green-soft); }
-
-  .order-email { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 6px; }
-  .order-items { font-size: 13px; color: var(--ink); background: var(--cream); padding: 8px 12px; border-radius: 8px; margin-top: 6px; }
-  .order-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-  .order-total { font-family: 'Mali', sans-serif; font-weight: 700; color: var(--red); font-size: 16px; }
 
   .product-row {
     display: flex; align-items: center; gap: 14px; padding: 14px 16px;
@@ -119,10 +91,11 @@
   .file-status.missing { color: var(--ink-soft); }
   .row-actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
 
-  .folder-file-list { margin-top: 4px; padding-left: 16px; }
-  .folder-file-list summary { cursor: pointer; font-size: 12px; color: var(--green-soft); }
-  .folder-file-list div { font-size: 12px; padding: 2px 0; }
-  .folder-file-list a { color: var(--ink-soft); }
+  .extra-link-row { font-size: 12px; }
+  .extra-link-row a { color: var(--green-soft); }
+  .pdf-slot { margin-bottom: 14px; padding: 12px 14px; border: 1px dashed var(--line); border-radius: 10px; }
+  .pdf-slot label { font-size: 12.5px; font-weight: 600; color: var(--ink); margin-bottom: 6px; display: block; }
+  .file-list-row { font-size: 12px; margin-top: 3px; }
 
   .empty-note { color: var(--ink-soft); font-size: 13.5px; padding: 20px 0; text-align: center; }
 
@@ -148,6 +121,14 @@
   .month-row .month-label { font-family: 'Mali', sans-serif; font-weight: 600; }
   .month-row .month-count { color: var(--ink-soft); font-size: 12.5px; }
   .month-row .month-total { font-family: 'Mali', sans-serif; font-weight: 700; color: var(--red); }
+
+  .sale-row {
+    display: flex; align-items: center; gap: 14px; padding: 12px 16px;
+    border: 2px solid var(--line); border-radius: 12px; margin-bottom: 8px; font-size: 13.5px;
+  }
+  .sale-row .sale-date { color: var(--ink-soft); white-space: nowrap; }
+  .sale-row .sale-note { flex: 1; color: var(--ink-soft); }
+  .sale-row .sale-amount { font-family: 'Mali', sans-serif; font-weight: 700; color: var(--red); white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -156,32 +137,54 @@
 
   <header class="site">
     <div class="brand-group">
-      <div class="brand">Nurse<span>ER</span><small>ระบบจัดการหลังบ้าน (Admin Dashboard)</small></div>
+      <div class="brand">Nurse<span>ER</span><small>ระบบจัดการสินค้าและเนื้อหา</small></div>
       <span class="admin-badge">ADMIN</span>
-    </div>
-    <div>
-      <a href="index.html" class="btn-outline">🛒 กลับไปหน้าร้านค้า</a>
     </div>
   </header>
 
-  <!-- SECTION 1: INCOMING ORDERS VERIFICATION -->
-  <h1 class="page-title">คำสั่งซื้อจากลูกค้า (รอตรวจสอบ & อนุมัติ)</h1>
-  <p class="subtitle">คำสั่งซื้อที่ลูกค้าอัปโหลดสลิปจากหน้าร้านจะปรากฏที่นี่ — กดปุ่ม "อนุมัติ" เพื่อให้ลูกค้าใช้อีเมลเข้าดูไฟล์ได้</p>
+  <div class="admin-note">
+    หน้านี้สำหรับผู้จัดทำ (Admin) เท่านั้น กรุณาเก็บลิงก์นี้ไว้เป็นส่วนตัว — ยังไม่มีระบบ Login ป้องกันการเข้าถึง (ตามสถาปัตยกรรมข้อ 40 ควรเพิ่มระบบ Authentication ก่อนใช้งานจริง) และไฟล์ที่แนบจะเก็บอยู่ในเบราว์เซอร์นี้เท่านั้น หากรีเฟรชหน้าจะหายไป แนะนำให้ "ดาวน์โหลดข้อมูลสินค้า" เก็บไว้ทุกครั้งที่แก้ไข
+  </div>
+
+  <h1 class="page-title">ยอดขาย</h1>
+  <p class="subtitle">นำเข้าไฟล์ยอดขายที่บันทึกอัตโนมัติจากหน้าสั่งซื้อ หรือบันทึกเพิ่มด้วยมือ เพื่อดูยอดรายวันและสรุปรายเดือน</p>
 
   <div class="toolbar">
-    <button class="btn-outline" onclick="loadOrders()">🔄 รีเฟรชรายการคำสั่งซื้อ</button>
-    <button class="btn-outline" onclick="clearConfirmedOrders()">🧹 ล้างรายการที่อนุมัติแล้ว</button>
+    <button class="btn-outline" onclick="exportSales()">⬇ ดาวน์โหลดข้อมูลยอดขาย (JSON)</button>
+    <label class="btn-outline" style="cursor:pointer;">⬆ นำเข้าไฟล์ JSON จากหน้าสั่งซื้อ
+      <input type="file" accept=".json" style="display:none;" onchange="importSales(event)">
+    </label>
   </div>
 
+  <div class="admin-note">
+    ✅ เมื่อลูกค้าโอนเงินและกด "จำลอง: Admin ยืนยันการชำระเงิน" ในหน้าสั่งซื้อ ระบบจะ<strong>บันทึกยอดขายให้อัตโนมัติ</strong>ในหน้านั้น — แต่เพราะหน้าสั่งซื้อกับหน้า Admin นี้เป็นคนละไฟล์ ไม่มี Backend เชื่อมกัน จึงต้องกดลิงก์ "สำหรับผู้ดูแลระบบ: ดาวน์โหลดข้อมูลยอดขาย" ที่ท้ายหน้าสั่งซื้อ แล้วนำไฟล์ JSON มา "นำเข้า" ที่นี่อีกที ไม่ต้องพิมพ์ยอดเองแล้ว (การนำเข้าจะรวมกับข้อมูลเดิม ไม่ทับรายการซ้ำ)
+  </div>
+
+  <!-- ADD SALE FORM -->
   <div class="panel">
-    <h2>รายการคำสั่งซื้อทั้งหมด</h2>
-    <div id="orders-list"></div>
+    <h2>บันทึกคำสั่งซื้อ</h2>
+    <div class="field-row">
+      <div class="field" id="field-sale-date">
+        <label>วันที่ชำระเงิน</label>
+        <input type="date" id="sale-date">
+        <div class="field-error">กรุณาเลือกวันที่</div>
+      </div>
+      <div class="field" id="field-sale-amount">
+        <label>ยอดเงิน (บาท)</label>
+        <input type="number" id="sale-amount" min="0" placeholder="650">
+        <div class="field-error">กรุณากรอกยอดเงินให้ถูกต้อง</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Order ID / หมายเหตุ (ถ้ามี)</label>
+      <input type="text" id="sale-note" placeholder="เช่น NER-20260907-0001">
+    </div>
+    <div class="form-actions">
+      <button class="btn-primary" onclick="addSale()">บันทึกยอดขาย</button>
+    </div>
   </div>
 
-  <!-- SECTION 2: SALES DASHBOARD -->
-  <h1 class="page-title">สรุปยอดขาย</h1>
-  <p class="subtitle">ระบบจะนับยอดขายอัตโนมัติเมื่อกดอนุมัติคำสั่งซื้อ หรือบันทึกเพิ่มด้วยมือได้</p>
-
+  <!-- SALES SUMMARY -->
   <div class="sales-summary-row">
     <div class="sales-stat-card">
       <div class="sales-stat-label">ยอดขายวันนี้</div>
@@ -202,31 +205,13 @@
     <div id="monthly-summary"></div>
   </div>
 
-  <!-- MANUAL SALE LOG -->
   <div class="panel">
-    <h2>บันทึกยอดขายนอกระบบ (Manual)</h2>
-    <div class="field-row">
-      <div class="field" id="field-sale-date">
-        <label>วันที่</label>
-        <input type="date" id="sale-date">
-      </div>
-      <div class="field" id="field-sale-amount">
-        <label>ยอดเงิน (บาท)</label>
-        <input type="number" id="sale-amount" min="0" placeholder="650">
-      </div>
-    </div>
-    <div class="field">
-      <label>หมายเหตุ</label>
-      <input type="text" id="sale-note" placeholder="เช่น สั่งซื้อทาง Inbox LINE">
-    </div>
-    <div class="form-actions">
-      <button class="btn-primary" onclick="addManualSale()">+ บันทึกยอด</button>
-    </div>
+    <h2>รายการคำสั่งซื้อทั้งหมด</h2>
+    <div id="sales-list"></div>
   </div>
 
-  <!-- SECTION 3: PRODUCT CATALOG MANAGEMENT -->
   <h1 class="page-title">จัดการสินค้า</h1>
-  <p class="subtitle">เพิ่ม แก้ไข หรือลบสินค้า แนบไฟล์ PDF หรือโฟลเดอร์ไฟล์สำหรับจำหน่าย</p>
+  <p class="subtitle">เพิ่ม แก้ไข หรือลบสินค้า แนบไฟล์ PDF ตามจำนวนเรื่องในชุด และลิงก์ไฟล์เพิ่มเติม</p>
 
   <div class="toolbar">
     <button class="btn-outline" onclick="exportCatalog()">⬇ ดาวน์โหลดข้อมูลสินค้า (JSON)</button>
@@ -259,14 +244,15 @@
       </div>
     </div>
     <div class="field">
-      <label>แนบไฟล์ PDF</label>
-      <input type="file" id="p-pdf" accept=".pdf">
-      <div class="field-note-plain" id="p-pdf-current"></div>
+      <label>จำนวนไฟล์ในชุดนี้ (ถ้าเป็นสินค้าเดี่ยวใส่ 1 ถ้าเป็นคอมโบรวมหลายเรื่องใส่ตามจำนวนเรื่อง)</label>
+      <input type="number" id="p-file-count" min="1" value="1" oninput="onFileCountChange()">
     </div>
+    <div class="field-note-plain" style="margin-top:-10px; margin-bottom:14px;">📌 ไฟล์ PDF ที่แนบจะถูกฝังลงในไฟล์ JSON ตอนดาวน์โหลด เพื่อให้หน้าสั่งซื้อดาวน์โหลดไฟล์จริงได้ — แนะนำให้แต่ละไฟล์มีขนาดไม่เกิน ~5MB ไม่เช่นนั้นไฟล์ JSON อาจใหญ่มากและโหลดช้า</div>
+    <div id="p-pdf-slots"></div>
     <div class="field">
-      <label>แนบโฟลเดอร์ไฟล์</label>
-      <input type="file" id="p-folder-files" webkitdirectory directory multiple>
-      <div class="field-note-plain" id="p-folder-current"></div>
+      <label>ลิงก์ไฟล์เพิ่มเติม (วางลิงก์ Google Drive หรืออื่น ๆ)</label>
+      <input type="url" id="p-extra-link" placeholder="https://drive.google.com/...">
+      <div class="field-note-plain" id="p-extra-link-current"></div>
     </div>
     <div class="form-actions">
       <button class="btn-primary" onclick="saveProduct()">บันทึกสินค้า</button>
@@ -276,16 +262,23 @@
 
   <!-- PRODUCT LIST -->
   <div class="panel">
-    <h2>สินค้าทั้งหมดในระบบ</h2>
+    <h2>สินค้าทั้งหมด</h2>
     <div id="product-list"></div>
   </div>
 
 </div>
 
 <script>
-  const money = (n) => Number(n).toLocaleString('th-TH') + ' บาท';
-  const todayStr = () => new Date().toISOString().slice(0, 10);
-  const monthKey = (dateStr) => dateStr.slice(0, 7);
+  // ---- Sales records (manually logged confirmed orders) ----
+  let salesOrders = []; // { id, date: 'YYYY-MM-DD', amount, note }
+
+  function todayStr() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  function monthKey(dateStr) {
+    return dateStr.slice(0, 7); // YYYY-MM
+  }
 
   function monthLabel(key) {
     const [y, m] = key.split('-');
@@ -293,148 +286,43 @@
     return `${names[parseInt(m, 10) - 1]} ${y}`;
   }
 
-  // ==========================================
-  // 1. ORDER VERIFICATION (เชื่อมต่อ localStorage)
-  // ==========================================
-  function getStoredOrders() {
-    try {
-      return JSON.parse(localStorage.getItem('nurse_orders') || '[]');
-    } catch (e) {
-      return [];
-    }
-  }
-
-  function saveStoredOrders(orders) {
-    localStorage.setItem('nurse_orders', JSON.stringify(orders));
-  }
-
-  function loadOrders() {
-    const orders = getStoredOrders();
-    const container = document.getElementById('orders-list');
-
-    if (orders.length === 0) {
-      container.innerHTML = '<div class="empty-note">ยังไม่มีคำสั่งซื้อที่ส่งเข้ามาจากหน้าร้านค้า</div>';
-      return;
-    }
-
-    // เรียงให้ออเดอร์ใหม่ล่าสุดขึ้นก่อน
-    const sorted = [...orders].reverse();
-
-    container.innerHTML = sorted.map(o => {
-      const isPending = o.status === 'pending';
-      const itemsText = (o.items || []).map(i => `${i.name} (${money(i.price)})`).join(', ');
-
-      return `
-        <div class="order-card">
-          <div class="order-info">
-            <div class="order-header">
-              <span class="order-id">${o.orderId}</span>
-              <span class="badge-status ${o.status}">${isPending ? '🟡 รอตรวจสอบสลิป' : '🟢 ยืนยันแล้ว'}</span>
-              <span style="font-size:12px; color:var(--ink-soft);">${o.createdAt ? o.createdAt.slice(0, 10) : ''}</span>
-            </div>
-            <div class="order-email">📧 ลูกค้า: <strong>${o.email}</strong></div>
-            <div class="order-items">📚 สินค้า: ${itemsText || '—'}</div>
-          </div>
-          <div class="order-actions">
-            <div class="order-total">${money(o.total || 0)}</div>
-            ${isPending ? `<button class="btn-success" onclick="confirmOrder('${o.orderId}')">✓ ยืนยันการชำระเงิน</button>` : '<span style="font-size:12px; color:var(--green-soft);">✓ เข้าถึงไฟล์ได้แล้ว</span>'}
-            <button class="btn-text danger" onclick="deleteOrder('${o.orderId}')">ลบออเดอร์</button>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  function confirmOrder(orderId) {
-    const orders = getStoredOrders();
-    const order = orders.find(o => o.orderId === orderId);
-    if (!order) return;
-
-    order.status = 'confirmed';
-    saveStoredOrders(orders);
-
-    // บันทึกยอดขายเข้าสู่ระบบ Sales อัตโนมัติ
-    recordSaleFromOrder(order);
-
-    loadOrders();
-    renderSalesDashboard();
-    alert(`ยืนยันคำสั่งซื้อ ${orderId} สำเร็จแล้ว!\nลูกค้าอีเมล ${order.email} สามารถเข้าดูไฟล์ได้ทันที`);
-  }
-
-  function deleteOrder(orderId) {
-    if (!confirm(`ต้องการลบคำสั่งซื้อ ${orderId} หรือไม่?`)) return;
-    const orders = getStoredOrders().filter(o => o.orderId !== orderId);
-    saveStoredOrders(orders);
-    loadOrders();
-  }
-
-  function clearConfirmedOrders() {
-    if (!confirm('ต้องการล้างประวัติคำสั่งซื้อที่ยืนยันแล้วทั้งหมดหรือไม่? (ลูกค้าเดิมจะยังคงเข้าไฟล์ได้หากไม่ลบ)')) return;
-    const orders = getStoredOrders().filter(o => o.status === 'pending');
-    saveStoredOrders(orders);
-    loadOrders();
-  }
-
-  // ==========================================
-  // 2. SALES DASHBOARD
-  // ==========================================
-  function getStoredSales() {
-    try {
-      return JSON.parse(localStorage.getItem('nurse_sales') || '[]');
-    } catch (e) {
-      return [];
-    }
-  }
-
-  function saveStoredSales(sales) {
-    localStorage.setItem('nurse_sales', JSON.stringify(sales));
-  }
-
-  function recordSaleFromOrder(order) {
-    const sales = getStoredSales();
-    sales.push({
-      id: 's' + Date.now(),
-      date: todayStr(),
-      amount: Number(order.total || 0),
-      note: order.orderId + ' (' + order.email + ')'
-    });
-    saveStoredSales(sales);
-  }
-
-  function addManualSale() {
-    const date = document.getElementById('sale-date').value || todayStr();
-    const amount = Number(document.getElementById('sale-amount').value);
+  function addSale() {
+    const date = document.getElementById('sale-date').value;
+    const amountRaw = document.getElementById('sale-amount').value;
     const note = document.getElementById('sale-note').value.trim();
 
-    if (!amount || amount <= 0) {
-      alert('กรุณากรอกจำนวนเงินให้ถูกต้อง');
-      return;
-    }
+    const dateOk = validateField('field-sale-date', !!date);
+    const amountOk = validateField('field-sale-amount', amountRaw !== '' && Number(amountRaw) >= 0);
+    if (!(dateOk && amountOk)) return;
 
-    const sales = getStoredSales();
-    sales.push({ id: 's' + Date.now(), date, amount, note });
-    saveStoredSales(sales);
+    salesOrders.push({ id: 's' + Date.now(), date, amount: Number(amountRaw), note });
 
+    document.getElementById('sale-date').value = '';
     document.getElementById('sale-amount').value = '';
     document.getElementById('sale-note').value = '';
+
+    renderSalesDashboard();
+  }
+
+  function deleteSale(id) {
+    salesOrders = salesOrders.filter(s => s.id !== id);
     renderSalesDashboard();
   }
 
   function renderSalesDashboard() {
-    const sales = getStoredSales();
     const today = todayStr();
     const thisMonth = monthKey(today);
 
-    const todayTotal = sales.filter(s => s.date === today).reduce((sum, s) => sum + s.amount, 0);
-    const monthTotal = sales.filter(s => monthKey(s.date) === thisMonth).reduce((sum, s) => sum + s.amount, 0);
-    const allTimeTotal = sales.reduce((sum, s) => sum + s.amount, 0);
+    const todayTotal = salesOrders.filter(s => s.date === today).reduce((sum, s) => sum + s.amount, 0);
+    const monthTotal = salesOrders.filter(s => monthKey(s.date) === thisMonth).reduce((sum, s) => sum + s.amount, 0);
+    const allTimeTotal = salesOrders.reduce((sum, s) => sum + s.amount, 0);
 
     document.getElementById('stat-today').textContent = money(todayTotal);
     document.getElementById('stat-this-month').textContent = money(monthTotal);
     document.getElementById('stat-all-time').textContent = money(allTimeTotal);
 
     const byMonth = {};
-    sales.forEach(s => {
+    salesOrders.forEach(s => {
       const key = monthKey(s.date);
       if (!byMonth[key]) byMonth[key] = { total: 0, count: 0 };
       byMonth[key].total += s.amount;
@@ -456,31 +344,95 @@
         </div>
       `).join('');
     }
+
+    const listContainer = document.getElementById('sales-list');
+    if (salesOrders.length === 0) {
+      listContainer.innerHTML = '<div class="empty-note">ยังไม่มีรายการ</div>';
+    } else {
+      const sorted = [...salesOrders].sort((a, b) => b.date.localeCompare(a.date));
+      listContainer.innerHTML = sorted.map(s => `
+        <div class="sale-row">
+          <div class="sale-date">${s.date}</div>
+          <div class="sale-note">${s.note || '—'}</div>
+          <div class="sale-amount">${money(s.amount)}</div>
+          <button class="btn-text danger" onclick="deleteSale('${s.id}')">ลบ</button>
+        </div>
+      `).join('');
+    }
   }
 
-  // ==========================================
-  // 3. PRODUCT CATALOG
-  // ==========================================
+  function exportSales() {
+    const blob = new Blob([JSON.stringify({ salesOrders }, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'nurse-er-sales.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function importSales(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        if (!Array.isArray(data.salesOrders)) throw new Error('รูปแบบไฟล์ไม่ถูกต้อง');
+        const existingIds = new Set(salesOrders.map(s => s.id));
+        const newOnes = data.salesOrders.filter(s => !existingIds.has(s.id));
+        salesOrders = salesOrders.concat(newOnes);
+        renderSalesDashboard();
+      } catch (e) {
+        alert('ไม่สามารถนำเข้าไฟล์ได้: ' + e.message);
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  }
+
+  // ---- Initial data, matching the current live catalog ----
+  const emptyFiles = (n) => Array.from({ length: n }, () => ({ pdfName: null, pdfUrl: null, pdfData: null }));
+
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function base64ToBlob(base64, mime) {
+    const byteChars = atob(base64);
+    const byteNumbers = new Array(byteChars.length);
+    for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+    return new Blob([new Uint8Array(byteNumbers)], { type: mime });
+  }
+
   let products = [
-    { id: 'ekg', name: 'การอ่าน EKG เบื้องต้น', meta: 'คอร์สวิดีโอ', price: 150, was: null, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'patho1', name: 'Pathology โรคที่พบบ่อยใน ER เล่ม 1', meta: 'เอกสารประกอบการเรียน · PDF', price: 250, was: null, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'patho2', name: 'Pathology โรค เล่ม 2', meta: 'เอกสารประกอบการเรียน · PDF', price: 250, was: null, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'ca', name: 'Pathology CA', meta: 'เอกสารประกอบการเรียน · PDF', price: 50, was: null, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'ob', name: 'Pathology ผดุงครรภ์', meta: 'เอกสารประกอบการเรียน · PDF', price: 50, was: null, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'case47', name: '47 Case Study', meta: 'โรคสำคัญใน Medical ICU และตึกอายุรกรรม', price: 490, was: null, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'surgical', name: 'Surgical & ICU Surgical', meta: 'พยาธิสภาพและการพยาบาลกรณีศึกษา', price: 450, was: null, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'b-ekg-patho1', name: 'EKG + Pathology เล่ม 1', meta: 'รวม 2 เรื่อง', price: 350, was: 400, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'b-patho12', name: 'Pathology เล่ม 1 + เล่ม 2', meta: 'รวม 2 เรื่อง', price: 450, was: 500, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'b-patho2-ekg', name: 'Pathology เล่ม 2 + EKG', meta: 'รวม 2 เรื่อง', price: 350, was: 400, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'b-triple', name: 'Pathology เล่ม 1 + เล่ม 2 + EKG', meta: 'รวม 3 เรื่อง', price: 550, was: 650, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'b-all5', name: 'ครบชุด Pathology + EKG', meta: 'EKG, Patho เล่ม 1-2, CA, ผดุงครรภ์ (5 เรื่อง)', price: 650, was: 750, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'b-addpatho2', name: 'เพิ่ม Pathology เล่ม 2', meta: 'ราคาพิเศษสำหรับผู้ที่มี EKG + Pathology เล่ม 1 แล้ว', price: 200, was: null, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'b-5-case', name: 'ครบชุด Pathology + EKG + 47 Case Study', meta: 'รวม 6 เรื่อง', price: 850, was: 1140, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'b-5-surgical', name: 'ครบชุด Pathology + EKG + Surgical & ICU Surgical', meta: 'รวม 6 เรื่อง', price: 850, was: 1100, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
-    { id: 'b-all7', name: 'ครบทุกไฟล์ (7 ไฟล์)', meta: 'ทุกเล่ม + 47 Case Study + Surgical & ICU Surgical', price: 1050, was: 1690, pdfName: null, pdfUrl: null, folderName: null, folderFiles: [] },
+    { id: 'ekg', name: 'การอ่าน EKG เบื้องต้น', meta: 'คอร์สวิดีโอ', price: 150, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'patho1', name: 'Pathology โรคที่พบบ่อยใน ER เล่ม 1', meta: 'เอกสารประกอบการเรียน · PDF', price: 250, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'patho2', name: 'Pathology โรค เล่ม 2', meta: 'เอกสารประกอบการเรียน · PDF', price: 250, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'ca', name: 'Pathology CA', meta: 'เอกสารประกอบการเรียน · PDF', price: 50, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'ob', name: 'Pathology ผดุงครรภ์', meta: 'เอกสารประกอบการเรียน · PDF', price: 50, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'pedia-newborn', name: 'Pathology Pediatric & Newborn', meta: 'เอกสารประกอบการเรียน · PDF', price: 350, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'case47', name: '47 Case Study', meta: 'โรคสำคัญใน Medical ICU และตึกอายุรกรรม', price: 490, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'surgical', name: 'Surgical & ICU Surgical', meta: 'พยาธิสภาพและการพยาบาลกรณีศึกษา', price: 450, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'icu-med-surgical', name: 'ICU Med & ICU Surgical', meta: 'พยาธิสภาพและการพยาบาลผู้ป่วยวิกฤต', price: 650, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'b-ekg-patho1', name: 'EKG + Pathology เล่ม 1', meta: 'รวม 2 เรื่อง', price: 350, was: 400, files: emptyFiles(2), extraLink: null },
+    { id: 'b-patho12', name: 'Pathology เล่ม 1 + เล่ม 2', meta: 'รวม 2 เรื่อง', price: 450, was: 500, files: emptyFiles(2), extraLink: null },
+    { id: 'b-patho2-ekg', name: 'Pathology เล่ม 2 + EKG', meta: 'รวม 2 เรื่อง', price: 350, was: 400, files: emptyFiles(2), extraLink: null },
+    { id: 'b-triple', name: 'Pathology เล่ม 1 + เล่ม 2 + EKG', meta: 'รวม 3 เรื่อง', price: 550, was: 650, files: emptyFiles(3), extraLink: null },
+    { id: 'b-all5', name: 'ครบชุด Pathology + EKG', meta: 'EKG, Patho เล่ม 1-2, CA, ผดุงครรภ์ (5 เรื่อง)', price: 650, was: 750, files: emptyFiles(5), extraLink: null },
+    { id: 'b-addpatho2', name: 'เพิ่ม Pathology เล่ม 2', meta: 'ราคาพิเศษสำหรับผู้ที่มี EKG + Pathology เล่ม 1 แล้ว', price: 200, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'b-5-case', name: 'ครบชุด Pathology + EKG + 47 Case Study', meta: 'รวม 6 เรื่อง', price: 850, was: 1140, files: emptyFiles(6), extraLink: null },
+    { id: 'b-5-surgical', name: 'ครบชุด Pathology + EKG + Surgical & ICU Surgical', meta: 'รวม 6 เรื่อง', price: 850, was: 1100, files: emptyFiles(6), extraLink: null },
+    { id: 'b-all8', name: 'ครบทุกไฟล์ (8 ไฟล์)', meta: 'ทุกเล่ม + Pediatric & Newborn + 47 Case Study + Surgical & ICU Surgical', price: 1400, was: 2040, files: emptyFiles(8), extraLink: null },
   ];
 
   let editingId = null;
+  const money = (n) => Number(n).toLocaleString('th-TH') + ' บาท';
 
   function slugify(name) {
     let base = name.trim().toLowerCase().replace(/[^a-z0-9ก-๙]+/g, '-').replace(/(^-|-$)/g, '');
@@ -502,24 +454,31 @@
       container.innerHTML = '<div class="empty-note">ยังไม่มีสินค้า</div>';
       return;
     }
-    container.innerHTML = products.map(p => `
+    container.innerHTML = products.map(p => {
+      const attachedCount = p.files.filter(f => f.pdfName).length;
+      const fileLines = p.files.length === 1
+        ? `<div class="file-status ${attachedCount ? 'attached' : 'missing'}">
+             ${p.files[0].pdfName ? '📎 แนบไฟล์แล้ว: ' + p.files[0].pdfName : '— ยังไม่ได้แนบไฟล์ PDF'}
+             ${p.files[0].pdfUrl ? ` · <a href="${p.files[0].pdfUrl}" target="_blank" rel="noopener">เปิดไฟล์</a>` : ''}
+           </div>`
+        : `<div class="file-status ${attachedCount === p.files.length ? 'attached' : 'missing'}">
+             📎 แนบแล้ว ${attachedCount}/${p.files.length} ไฟล์
+           </div>
+           ${p.files.map((f, i) => `
+             <div class="file-list-row">
+               ไฟล์ที่ ${i + 1}: ${f.pdfName ? f.pdfName : '<span style="color:var(--ink-soft);">— ยังไม่ได้แนบ</span>'}
+               ${f.pdfUrl ? ` · <a href="${f.pdfUrl}" target="_blank" rel="noopener">เปิดไฟล์</a>` : ''}
+             </div>
+           `).join('')}`;
+      return `
       <div class="product-row">
         <div class="info">
           <div class="name">${p.name}</div>
           <div class="meta">${p.meta || ''}</div>
-          <div class="file-status ${p.pdfName ? 'attached' : 'missing'}">
-            ${p.pdfName ? '📎 แนบไฟล์แล้ว: ' + p.pdfName : '— ยังไม่ได้แนบไฟล์ PDF'}
-            ${p.pdfUrl ? ` · <a href="${p.pdfUrl}" target="_blank" rel="noopener">เปิดไฟล์</a>` : ''}
+          ${fileLines}
+          <div class="file-status ${p.extraLink ? 'attached' : 'missing'} extra-link-row">
+            ${p.extraLink ? `🔗 ลิงก์เพิ่มเติม: <a href="${p.extraLink}" target="_blank" rel="noopener">${p.extraLink}</a>` : '— ยังไม่ได้ใส่ลิงก์ไฟล์เพิ่มเติม'}
           </div>
-          <div class="file-status ${p.folderFiles.length ? 'attached' : 'missing'}">
-            ${p.folderFiles.length ? `📁 โฟลเดอร์: ${p.folderName} (${p.folderFiles.length} ไฟล์)` : '— ยังไม่ได้แนบโฟลเดอร์ไฟล์'}
-          </div>
-          ${p.folderFiles.length ? `
-            <details class="folder-file-list">
-              <summary>ดูรายชื่อไฟล์ในโฟลเดอร์</summary>
-              ${p.folderFiles.map(f => `<div><a href="${f.url}" target="_blank" rel="noopener">${f.name}</a></div>`).join('')}
-            </details>
-          ` : ''}
         </div>
         <div class="price">
           ${p.was ? `<span class="was">${money(p.was)}</span>` : ''}${money(p.price)}
@@ -529,7 +488,31 @@
           <button class="btn-text danger" onclick="deleteProduct('${p.id}')">ลบ</button>
         </div>
       </div>
-    `).join('');
+    `;
+    }).join('');
+  }
+
+  function renderFileSlots(count, existingFiles) {
+    const container = document.getElementById('p-pdf-slots');
+    let html = '';
+    for (let i = 0; i < count; i++) {
+      const current = existingFiles && existingFiles[i] ? existingFiles[i].pdfName : null;
+      html += `
+        <div class="pdf-slot">
+          <label>ไฟล์ที่ ${i + 1}</label>
+          <input type="file" id="p-pdf-slot-${i}" accept=".pdf">
+          <div class="field-note-plain">${current ? 'ไฟล์ปัจจุบัน: ' + current + ' (เลือกไฟล์ใหม่เพื่อแทนที่)' : ''}</div>
+        </div>
+      `;
+    }
+    container.innerHTML = html;
+  }
+
+  function onFileCountChange() {
+    let count = parseInt(document.getElementById('p-file-count').value, 10);
+    if (!count || count < 1) count = 1;
+    const existing = editingId ? products.find(x => x.id === editingId).files : [];
+    renderFileSlots(count, existing);
   }
 
   function editProduct(id) {
@@ -541,10 +524,9 @@
     document.getElementById('p-meta').value = p.meta || '';
     document.getElementById('p-price').value = p.price;
     document.getElementById('p-was').value = p.was || '';
-    document.getElementById('p-pdf').value = '';
-    document.getElementById('p-pdf-current').textContent = p.pdfName ? ('ไฟล์ปัจจุบัน: ' + p.pdfName + ' (เลือกไฟล์ใหม่เพื่อแทนที่)') : '';
-    document.getElementById('p-folder-files').value = '';
-    document.getElementById('p-folder-current').textContent = p.folderFiles.length ? (`โฟลเดอร์ปัจจุบัน: ${p.folderName} (${p.folderFiles.length} ไฟล์)`) : '';
+    document.getElementById('p-file-count').value = p.files.length;
+    renderFileSlots(p.files.length, p.files);
+    document.getElementById('p-extra-link').value = p.extraLink || '';
     document.getElementById('cancel-edit-btn').classList.remove('hidden');
     window.scrollTo(0, 0);
   }
@@ -556,26 +538,32 @@
     document.getElementById('p-meta').value = '';
     document.getElementById('p-price').value = '';
     document.getElementById('p-was').value = '';
-    document.getElementById('p-pdf').value = '';
-    document.getElementById('p-pdf-current').textContent = '';
-    document.getElementById('p-folder-files').value = '';
-    document.getElementById('p-folder-current').textContent = '';
+    document.getElementById('p-file-count').value = 1;
+    renderFileSlots(1, []);
+    document.getElementById('p-extra-link').value = '';
     document.getElementById('cancel-edit-btn').classList.add('hidden');
   }
 
+  function revokeProductUrls(p) {
+    p.files.forEach(f => { if (f.pdfUrl) URL.revokeObjectURL(f.pdfUrl); });
+  }
+
   function deleteProduct(id) {
+    const p = products.find(x => x.id === id);
+    if (p) revokeProductUrls(p);
     products = products.filter(x => x.id !== id);
     if (editingId === id) cancelEdit();
     renderProducts();
   }
 
-  function saveProduct() {
+  async function saveProduct() {
     const name = document.getElementById('p-name').value.trim();
     const priceRaw = document.getElementById('p-price').value;
     const wasRaw = document.getElementById('p-was').value;
     const meta = document.getElementById('p-meta').value.trim();
-    const pdfFile = document.getElementById('p-pdf').files[0];
-    const folderFileList = document.getElementById('p-folder-files').files;
+    const extraLink = document.getElementById('p-extra-link').value.trim();
+    let fileCount = parseInt(document.getElementById('p-file-count').value, 10);
+    if (!fileCount || fileCount < 1) fileCount = 1;
 
     const nameOk = validateField('field-p-name', name.length > 0);
     const priceOk = validateField('field-p-price', priceRaw !== '' && Number(priceRaw) >= 0);
@@ -584,32 +572,46 @@
     const price = Number(priceRaw);
     const was = wasRaw !== '' ? Number(wasRaw) : null;
 
-    let newFolderName = null;
-    let newFolderFiles = null;
-    if (folderFileList && folderFileList.length > 0) {
-      newFolderName = folderFileList[0].webkitRelativePath.split('/')[0];
-      newFolderFiles = Array.from(folderFileList).map(f => ({ name: f.webkitRelativePath || f.name, url: URL.createObjectURL(f) }));
+    const saveBtn = document.querySelector('.form-actions .btn-primary');
+    const originalBtnText = saveBtn.textContent;
+    saveBtn.textContent = 'กำลังประมวลผลไฟล์...';
+    saveBtn.disabled = true;
+
+    const oldFiles = editingId ? products.find(x => x.id === editingId).files : [];
+    const newFiles = [];
+    for (let i = 0; i < fileCount; i++) {
+      const input = document.getElementById('p-pdf-slot-' + i);
+      const selected = input && input.files[0];
+      if (selected) {
+        if (oldFiles[i] && oldFiles[i].pdfUrl) URL.revokeObjectURL(oldFiles[i].pdfUrl);
+        const pdfData = await fileToBase64(selected);
+        newFiles.push({ pdfName: selected.name, pdfUrl: URL.createObjectURL(selected), pdfData });
+      } else if (oldFiles[i]) {
+        newFiles.push(oldFiles[i]);
+      } else {
+        newFiles.push({ pdfName: null, pdfUrl: null, pdfData: null });
+      }
     }
+    // revoke any old files beyond the new count
+    for (let i = fileCount; i < oldFiles.length; i++) {
+      if (oldFiles[i] && oldFiles[i].pdfUrl) URL.revokeObjectURL(oldFiles[i].pdfUrl);
+    }
+
+    saveBtn.textContent = originalBtnText;
+    saveBtn.disabled = false;
 
     if (editingId) {
       const p = products.find(x => x.id === editingId);
       p.name = name; p.meta = meta; p.price = price; p.was = was;
-      if (pdfFile) {
-        p.pdfName = pdfFile.name;
-        p.pdfUrl = URL.createObjectURL(pdfFile);
-      }
-      if (newFolderFiles) {
-        p.folderName = newFolderName;
-        p.folderFiles = newFolderFiles;
-      }
+      p.extraLink = extraLink || null;
+      p.files = newFiles;
     } else {
-      products.push({
+      const newProduct = {
         id: slugify(name), name, meta, price, was,
-        pdfName: pdfFile ? pdfFile.name : null,
-        pdfUrl: pdfFile ? URL.createObjectURL(pdfFile) : null,
-        folderName: newFolderName,
-        folderFiles: newFolderFiles || [],
-      });
+        files: newFiles,
+        extraLink: extraLink || null,
+      };
+      products.push(newProduct);
     }
 
     cancelEdit();
@@ -620,8 +622,9 @@
     const data = {
       products: products.map(p => ({
         id: p.id, name: p.name, meta: p.meta, price: p.price, was: p.was,
-        pdfName: p.pdfName, folderName: p.folderName,
-        folderFileNames: p.folderFiles.map(f => f.name),
+        fileNames: p.files.map(f => f.pdfName),
+        fileData: p.files.map(f => f.pdfData || null),
+        extraLink: p.extraLink,
       }))
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -641,7 +644,20 @@
       try {
         const data = JSON.parse(reader.result);
         if (!Array.isArray(data.products)) throw new Error('รูปแบบไฟล์ไม่ถูกต้อง');
-        products = data.products.map(p => ({ ...p, pdfUrl: null, folderFiles: [] }));
+        products.forEach(p => revokeProductUrls(p));
+        products = data.products.map(p => {
+          const names = Array.isArray(p.fileNames) ? p.fileNames : [null];
+          const dataArr = Array.isArray(p.fileData) ? p.fileData : [];
+          return {
+            id: p.id, name: p.name, meta: p.meta, price: p.price, was: p.was,
+            extraLink: p.extraLink || null,
+            files: names.map((n, i) => {
+              const pdfData = dataArr[i] || null;
+              const pdfUrl = pdfData ? URL.createObjectURL(base64ToBlob(pdfData, 'application/pdf')) : null;
+              return { pdfName: n || null, pdfUrl, pdfData };
+            }),
+          };
+        });
         cancelEdit();
         renderProducts();
       } catch (e) {
@@ -652,9 +668,8 @@
     event.target.value = '';
   }
 
-  // Initial load
-  loadOrders();
   renderProducts();
+  renderFileSlots(1, []);
   renderSalesDashboard();
   document.getElementById('sale-date').value = todayStr();
 </script>
