@@ -1,5 +1,5 @@
 <?php
-// เริ่มต้น Session เพื่อรองรับการจัดการสิทธิ์หรือตะกร้าสินค้าในอนาคต
+// เริ่มต้น Session เพื่อรองรับการจัดการสิทธิ์หรือตะกร้าสินค้า
 session_start();
 
 // ตั้งค่า Environment และ Configuration
@@ -19,13 +19,13 @@ $catalog = [
         'items' => [
             ['id' => 'ekg', 'name' => 'การอ่าน EKG เบื้องต้น', 'meta' => 'คอร์สวิดีโอ', 'price' => 150, 'was' => null],
             [
-    'id' => 'patho1',
-    'name' => 'Pathology โรคที่พบบ่อยใน ER เล่ม 1',
-    'meta' => 'เอกสารประกอบการเรียน · PDF',
-    'price' => 250,
-    'was' => null,
-    'pdf_url' => 'files/BIOLOGY.pdf'
-],
+                'id' => 'patho1',
+                'name' => 'Pathology โรคที่พบบ่อยใน ER เล่ม 1',
+                'meta' => 'เอกสารประกอบการเรียน · PDF',
+                'price' => 250,
+                'was' => null,
+                'pdf_url' => 'files/BIOLOGY.pdf'
+            ],
             ['id' => 'patho2', 'name' => 'Pathology โรค เล่ม 2', 'meta' => 'เอกสารประกอบการเรียน · PDF', 'price' => 250, 'was' => null],
             ['id' => 'ca', 'name' => 'Pathology CA', 'meta' => 'เอกสารประกอบการเรียน · PDF', 'price' => 50, 'was' => null],
             ['id' => 'ob', 'name' => 'Pathology ผดุงครรภ์', 'meta' => 'เอกสารประกอบการเรียน · PDF', 'price' => 50, 'was' => null],
@@ -58,16 +58,56 @@ $catalog = [
     ]
 ];
 
-// 2. ตัวอย่างไฟล์ก่อนซื้อ (Sample/Preview files)
+// 2. ตัวอย่างไฟล์ก่อนซื้อ (Sample/Preview files) พร้อมลิงก์ไฟล์จริง
 $previewSamples = [
-    ['name' => 'Pathology โรคที่พบบ่อยใน ER เล่ม 1', 'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF', 'icon' => '📄'],
-    ['name' => 'Pathology โรค เล่ม 2', 'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF', 'icon' => '📄'],
-    ['name' => 'การอ่าน EKG เบื้องต้น', 'meta' => 'ตัวอย่างคลิปสั้น · วิดีโอ', 'icon' => '🎬'],
-    ['name' => 'Pathology ผดุงครรภ์', 'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF', 'icon' => '📄'],
-    ['name' => 'Pathology Pediatric & Newborn', 'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF', 'icon' => '📄'],
-    ['name' => 'Pathology CA', 'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF', 'icon' => '📄'],
-    ['name' => '47 Case Study', 'meta' => 'ตัวอย่าง 1 เคส · Medical & ICU · PDF', 'icon' => '📄'],
-    ['name' => 'Surgical & ICU Surgical', 'meta' => 'ตัวอย่าง 1 เคส · PDF', 'icon' => '📄'],
+    [
+        'name' => 'Pathology โรคที่พบบ่อยใน ER เล่ม 1',
+        'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF',
+        'icon' => '📄',
+        'url'  => 'files/BIOLOGY.pdf'
+    ],
+    [
+        'name' => 'Pathology โรค เล่ม 2',
+        'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF',
+        'icon' => '📄',
+        'url'  => ''
+    ],
+    [
+        'name' => 'การอ่าน EKG เบื้องต้น',
+        'meta' => 'ตัวอย่างคลิปสั้น · วิดีโอ',
+        'icon' => '🎬',
+        'url'  => ''
+    ],
+    [
+        'name' => 'Pathology ผดุงครรภ์',
+        'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF',
+        'icon' => '📄',
+        'url'  => ''
+    ],
+    [
+        'name' => 'Pathology Pediatric & Newborn',
+        'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF',
+        'icon' => '📄',
+        'url'  => ''
+    ],
+    [
+        'name' => 'Pathology CA',
+        'meta' => 'ตัวอย่าง 3 หน้าแรก · PDF',
+        'icon' => '📄',
+        'url'  => ''
+    ],
+    [
+        'name' => '47 Case Study',
+        'meta' => 'ตัวอย่าง 1 เคส · Medical & ICU · PDF',
+        'icon' => '📄',
+        'url'  => ''
+    ],
+    [
+        'name' => 'Surgical & ICU Surgical',
+        'meta' => 'ตัวอย่าง 1 เคส · PDF',
+        'icon' => '📄',
+        'url'  => ''
+    ],
 ];
 
 // 3. รีวิวเริ่มต้น
@@ -86,7 +126,7 @@ $initialReviews = [
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- นำเข้า Supabase JS Client สำหรับเชื่อมต่อฐานข้อมูลโดยตรง -->
+<!-- นำเข้า Supabase JS Client สำหรับเชื่อมต่อฐานข้อมูล -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
@@ -121,10 +161,6 @@ $initialReviews = [
   }
 
   .brand-group { display: flex; align-items: center; gap: 10px; }
-  .profile-avatar {
-    width: 46px; height: 46px; border-radius: 50%; object-fit: cover;
-    border: 2px solid var(--ink); flex-shrink: 0;
-  }
   .brand { font-size: 22px; letter-spacing: 0.01em; }
   .brand span { color: var(--red); }
   .brand small { display: block; font-family: 'Sarabun', sans-serif; font-size: 12px; font-weight: 400; color: var(--ink-soft); margin-top: 2px; }
@@ -170,8 +206,9 @@ $initialReviews = [
   .preview-btn {
     margin-top: 4px; padding: 8px 12px; border-radius: 999px; font-size: 13px;
     font-family: 'Mali', sans-serif; font-weight: 600; cursor: pointer; border: 2px solid var(--ink);
-    background: transparent; color: var(--ink); text-align: center; text-decoration: none;
+    background: transparent; color: var(--ink); text-align: center; text-decoration: none; display: inline-block;
   }
+  .preview-btn:hover { background: var(--ink); color: #fff; }
 
   /* Catalog */
   .cat-group { margin-bottom: 32px; }
@@ -213,7 +250,6 @@ $initialReviews = [
   .remove-btn { background: none; border: none; color: var(--ink-soft); font-size: 13px; text-decoration: underline; cursor: pointer; padding: 0; }
   .remove-btn:hover { color: var(--red); }
   .empty-cart { padding: 50px 20px 60px; text-align: center; color: var(--ink-soft); }
-  .empty-cart .mascot { margin-bottom: 12px; }
 
   /* Summary card */
   .summary { padding: 24px; position: sticky; top: 20px; }
@@ -372,7 +408,18 @@ $initialReviews = [
             <div class="preview-icon"><?= htmlspecialchars($sample['icon']) ?></div>
             <div class="preview-name"><?= htmlspecialchars($sample['name']) ?></div>
             <div class="preview-meta"><?= htmlspecialchars($sample['meta']) ?></div>
-            <a class="preview-btn" href="#" onclick="openPreview('<?= htmlspecialchars($sample['name']) ?>', '<?= htmlspecialchars($sample['meta']) ?>'); return false;">ดูตัวอย่าง</a>
+            
+            <?php if (!empty($sample['url'])): ?>
+              <!-- เปิดไฟล์จริงในแท็บใหม่ทันที -->
+              <a class="preview-btn" href="<?= htmlspecialchars($sample['url']) ?>" target="_blank" rel="noopener noreferrer">
+                ดูตัวอย่าง
+              </a>
+            <?php else: ?>
+              <!-- กรณีที่ยังไม่มี URL ให้เปิดหน้าจำลอง -->
+              <a class="preview-btn" href="#" onclick="openPreview('<?= htmlspecialchars(addslashes($sample['name'])) ?>', '<?= htmlspecialchars(addslashes($sample['meta'])) ?>'); return false;">
+                ดูตัวอย่าง
+              </a>
+            <?php endif; ?>
           </div>
         <?php endforeach; ?>
       </div>
@@ -571,7 +618,7 @@ $initialReviews = [
 
   <!-- FOOTER & ADMIN TOOLBAR -->
   <div style="text-align:center; margin-top:60px; padding-top:20px; border-top:1px dashed var(--line); display:flex; gap:16px; justify-content:center; flex-wrap:wrap; align-items:center;">
-    <a href="admin.html" style="font-size:14px; color:#C9524A; font-weight:700; text-decoration:none; padding:6px 14px; border:2px solid #C9524A; border-radius:999px; background:#fff;">⚙️ ไปหน้า Admin จัดการสินค้า</a>
+    <a href="admin.php" style="font-size:14px; color:#C9524A; font-weight:700; text-decoration:none; padding:6px 14px; border:2px solid #C9524A; border-radius:999px; background:#fff;">⚙️ ไปหน้า Admin จัดการสินค้า</a>
   </div>
 
 </div>
@@ -754,11 +801,16 @@ $initialReviews = [
     document.getElementById('payment-status-note').textContent = '🟡 รอตรวจสอบการชำระเงิน';
   }
 
-  function openPreview(name, meta) {
+  function openPreview(name, meta, url = '') {
+    if (url) {
+      window.open(url, '_blank');
+      return;
+    }
+
     const html = `<!DOCTYPE html><html lang="th"><head><meta charset="UTF-8"><title>ตัวอย่าง: ${name}</title>
       <style>body{font-family:sans-serif;background:#FBF8F1;color:#2B2B2B;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;padding:24px;}
       div{max-width:440px;background:#fff;padding:28px;border-radius:18px;border:2px solid #E7E1D2;}h1{font-size:20px;color:#C9524A;}p{color:#6B6560;font-size:14px;}</style></head>
-      <body><div><h1>ตัวอย่าง: ${name}</h1><p>${meta}</p><p>ไฟล์ตัวอย่างเนื้อหาจะเปิดอ่านได้ที่นี่</p></div></body></html>`;
+      <body><div><h1>ตัวอย่าง: ${name}</h1><p>${meta}</p><p>กำลังจัดเตรียมไฟล์ตัวอย่างจริงสำหรับรายการนี้</p></div></body></html>`;
     const w = window.open('');
     w.document.write(html);
   }
@@ -768,7 +820,10 @@ $initialReviews = [
       const isVideo = (item.meta || '').includes('วิดีโอ');
       let actionHtml;
 
-      if (item.extraLink) {
+      // 1. ถ้ามีไฟล์ PDF ตรง (เช่น files/BIOLOGY.pdf) ให้ดาวน์โหลดได้ทันที
+      if (item.pdf_url) {
+        actionHtml = `<a class="access-btn" href="${item.pdf_url}" download target="_blank" rel="noopener">ดาวน์โหลด PDF</a>`;
+      } else if (item.extraLink) {
         actionHtml = `<a class="access-btn" href="${item.extraLink}" target="_blank" rel="noopener">เข้าถึงไฟล์</a>`;
       } else if (isVideo) {
         actionHtml = `<button class="access-btn" onclick="openPreview('${item.name}', '${item.meta}')">ดูวิดีโอ</button>`;
@@ -898,7 +953,7 @@ $initialReviews = [
     setTimeout(() => thanks.classList.add('hidden'), 3000);
   }
 
-  // เรียกทำงานครั้งแรก
+  // เริ่มต้นเรียกทำงาน
   updateCartUI();
 </script>
 
