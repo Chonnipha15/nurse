@@ -70,6 +70,7 @@
   .btn-outline {
     padding: 10px 18px; border: 2px solid var(--ink); background: transparent; color: var(--ink);
     border-radius: 999px; font-family: 'Mali', sans-serif; font-weight: 600; font-size: 13.5px; cursor: pointer;
+    text-decoration: none; display: inline-block;
   }
   .btn-text { border: none; background: none; color: var(--ink-soft); font-size: 13px; text-decoration: underline; cursor: pointer; padding: 0; }
   .btn-text:hover { color: var(--red); }
@@ -140,6 +141,7 @@
       <div class="brand">Nurse<span>ER</span><small>ระบบจัดการสินค้าและเนื้อหา</small></div>
       <span class="admin-badge">ADMIN</span>
     </div>
+    <a href="index.html" class="btn-outline">‹ กลับหน้าร้าน</a>
   </header>
 
   <div class="admin-note">
@@ -269,6 +271,11 @@
 </div>
 
 <script>
+  // ฟังก์ชันแปลงตัวเลขเป็นสกุลเงินบาท (ประกาศบนสุดเพื่อป้องกัน ReferenceError ตอนโหลดหน้า)
+  function money(n) {
+    return Number(n || 0).toLocaleString('th-TH') + ' บาท';
+  }
+
   // ---- Sales records (manually logged confirmed orders) ----
   let salesOrders = []; // { id, date: 'YYYY-MM-DD', amount, note }
 
@@ -432,7 +439,6 @@
   ];
 
   let editingId = null;
-  const money = (n) => Number(n).toLocaleString('th-TH') + ' บาท';
 
   function slugify(name) {
     let base = name.trim().toLowerCase().replace(/[^a-z0-9ก-๙]+/g, '-').replace(/(^-|-$)/g, '');
@@ -668,6 +674,7 @@
     event.target.value = '';
   }
 
+  // เรียกทำงานครั้งแรกหลังโหลดหน้า
   renderProducts();
   renderFileSlots(1, []);
   renderSalesDashboard();
