@@ -438,12 +438,12 @@
 
   <!-- FOOTER & ADMIN TOOLBAR -->
   <div style="text-align:center; margin-top:60px; padding-top:20px; border-top:1px dashed var(--line); display:flex; gap:16px; justify-content:center; flex-wrap:wrap; align-items:center;">
-    <a href="admin.html" style="font-size:12px; color:var(--red); font-weight:600; text-decoration:underline;">⚙️ เข้าสู่ระบบ Admin (จัดการสินค้า/ยอดขาย)</a>
+    <a href="admin.html" style="font-size:14px; color:#C9524A; font-weight:700; text-decoration:none; padding:6px 14px; border:2px solid #C9524A; border-radius:999px; background:#fff;">⚙️ ไปหน้า Admin จัดการสินค้า</a>
     <span style="color:var(--line);">|</span>
-    <a href="#" onclick="exportSalesLog(); return false;" style="font-size:12px; color:var(--ink-soft);">สำหรับผู้ดูแลระบบ: ดาวน์โหลดข้อมูลยอดขาย</a>
+    <a href="#" onclick="exportSalesLog(); return false;" style="font-size:12px; color:var(--ink-soft);">ดาวน์โหลดข้อมูลยอดขาย</a>
     <span style="color:var(--line);">|</span>
     <label style="font-size:12px; color:var(--ink-soft); cursor:pointer; text-decoration:underline;">
-      สำหรับผู้ดูแลระบบ: นำเข้าแคตตาล็อกจาก Admin (JSON)
+      นำเข้าแคตตาล็อกจาก Admin (JSON)
       <input type="file" accept=".json" style="display:none;" onchange="importAdminCatalog(event)">
     </label>
   </div>
