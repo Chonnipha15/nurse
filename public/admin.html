@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nurse ER — Admin จัดการสินค้า</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FBF8F1;
+    --panel: #FFFFFF;
+    --ink: #2B2B2B;
+    --ink-soft: #6B6560;
+    --line: #E7E1D2;
+    --red: #C9524A;
+    --red-soft: #F7E3E1;
+    --green-soft: #5B7A52;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--ink); font-family: 'Sarabun', sans-serif; line-height: 1.6; }
+  h1, h2, h3, .brand { font-family: 'Mali', sans-serif; font-weight: 600; margin: 0; }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 32px 20px 90px; }
+
+  header.site {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 20px; border-bottom: 2px solid var(--line); margin-bottom: 10px; flex-wrap: wrap; gap: 14px;
+  }
+  .brand-group { display: flex; align-items: center; gap: 10px; }
+  .brand { font-size: 22px; }
+  .brand span { color: var(--red); }
+  .brand small { display: block; font-family: 'Sarabun', sans-serif; font-size: 12px; font-weight: 400; color: var(--ink-soft); margin-top: 2px; }
+  .admin-badge {
+    font-size: 11.5px; background: var(--red); color: #fff; padding: 3px 10px; border-radius: 999px;
+    font-family: 'Mali', sans-serif; font-weight: 600;
+  }
+
+  .admin-note {
+    font-size: 12.5px; color: var(--ink-soft); background: var(--red-soft); padding: 10px 14px;
+    border-radius: 10px; margin-bottom: 28px;
+  }
+
+  h1.page-title { font-size: 26px; margin-bottom: 4px; }
+  .subtitle { color: var(--ink-soft); font-size: 14px; margin-bottom: 20px; }
+
+  .panel { background: var(--panel); border: 2px solid var(--line); border-radius: 18px; padding: 22px; margin-bottom: 28px; }
+  .panel h2 { font-size: 18px; margin-bottom: 14px; }
+
+  /* Form fields */
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 10px 12px; border: 2px solid var(--line); border-radius: 10px;
+    font-family: 'Sarabun', sans-serif; font-size: 14px; background: var(--cream);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--red); }
+  .field-error { font-size: 12px; color: var(--red); margin-top: 5px; display: none; }
+  .field.invalid input, .field.invalid select { border-color: var(--red); }
+  .field.invalid .field-error { display: block; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+
+  .btn-primary {
+    padding: 11px 20px; background: var(--red); color: #fff; border: none; border-radius: 999px;
+    font-family: 'Mali', sans-serif; font-size: 14.5px; font-weight: 700; cursor: pointer;
+  }
+  .btn-primary:hover { background: #B23F38; }
+  .btn-outline {
+    padding: 10px 18px; border: 2px solid var(--ink); background: transparent; color: var(--ink);
+    border-radius: 999px; font-family: 'Mali', sans-serif; font-weight: 600; font-size: 13.5px; cursor: pointer;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-text { border: none; background: none; color: var(--ink-soft); font-size: 13px; text-decoration: underline; cursor: pointer; padding: 0; }
+  .btn-text:hover { color: var(--red); }
+  .btn-text.danger:hover { color: var(--red); }
+
+  .form-actions { display: flex; gap: 10px; align-items: center; margin-top: 6px; }
+
+  .product-row {
+    display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+    border: 2px solid var(--line); border-radius: 14px; margin-bottom: 10px;
+  }
+  .product-row .info { flex: 1; min-width: 0; }
+  .product-row .name { font-weight: 600; font-family: 'Mali', sans-serif; font-size: 15px; }
+  .product-row .meta { font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
+  .product-row .price { font-family: 'Mali', sans-serif; font-weight: 700; color: var(--red); font-size: 15px; white-space: nowrap; }
+  .product-row .was { font-size: 12px; color: var(--ink-soft); text-decoration: line-through; margin-right: 6px; }
+  .file-status { font-size: 12px; margin-top: 4px; }
+  .file-status.attached { color: var(--green-soft); }
+  .file-status.missing { color: var(--ink-soft); }
+  .row-actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+
+  .extra-link-row { font-size: 12px; }
+  .extra-link-row a { color: var(--green-soft); }
+  .pdf-slot { margin-bottom: 14px; padding: 12px 14px; border: 1px dashed var(--line); border-radius: 10px; }
+  .pdf-slot label { font-size: 12.5px; font-weight: 600; color: var(--ink); margin-bottom: 6px; display: block; }
+  .file-list-row { font-size: 12px; margin-top: 3px; }
+
+  .empty-note { color: var(--ink-soft); font-size: 13.5px; padding: 20px 0; text-align: center; }
+
+  .toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .field-note-plain { font-size: 12px; color: var(--ink-soft); margin-top: 6px; }
+  .hidden { display: none; }
+
+  /* ---- Sales dashboard ---- */
+  .sales-summary-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+  @media (max-width: 640px) { .sales-summary-row { grid-template-columns: 1fr; } }
+  .sales-stat-card {
+    background: var(--panel); border: 2px solid var(--line); border-radius: 16px;
+    padding: 18px 20px;
+  }
+  .sales-stat-label { font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }
+  .sales-stat-value { font-size: 22px; font-weight: 700; font-family: 'Mali', sans-serif; color: var(--red); }
+
+  .month-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0; border-bottom: 1px dashed var(--line); font-size: 14px;
+  }
+  .month-row:last-child { border-bottom: none; }
+  .month-row .month-label { font-family: 'Mali', sans-serif; font-weight: 600; }
+  .month-row .month-count { color: var(--ink-soft); font-size: 12.5px; }
+  .month-row .month-total { font-family: 'Mali', sans-serif; font-weight: 700; color: var(--red); }
+
+  .sale-row {
+    display: flex; align-items: center; gap: 14px; padding: 12px 16px;
+    border: 2px solid var(--line); border-radius: 12px; margin-bottom: 8px; font-size: 13.5px;
+  }
+  .sale-row .sale-date { color: var(--ink-soft); white-space: nowrap; }
+  .sale-row .sale-note { flex: 1; color: var(--ink-soft); }
+  .sale-row .sale-amount { font-family: 'Mali', sans-serif; font-weight: 700; color: var(--red); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="site">
+    <div class="brand-group">
+      <div class="brand">Nurse<span>ER</span><small>ระบบจัดการสินค้าและเนื้อหา</small></div>
+      <span class="admin-badge">ADMIN</span>
+    </div>
+    <a href="index.html" class="btn-outline">‹ กลับหน้าร้าน</a>
+  </header>
+
+  <div class="admin-note">
+    หน้านี้สำหรับผู้จัดทำ (Admin) เท่านั้น กรุณาเก็บลิงก์นี้ไว้เป็นส่วนตัว — ยังไม่มีระบบ Login ป้องกันการเข้าถึง (ตามสถาปัตยกรรมข้อ 40 ควรเพิ่มระบบ Authentication ก่อนใช้งานจริง) และไฟล์ที่แนบจะเก็บอยู่ในเบราว์เซอร์นี้เท่านั้น หากรีเฟรชหน้าจะหายไป แนะนำให้ "ดาวน์โหลดข้อมูลสินค้า" เก็บไว้ทุกครั้งที่แก้ไข
+  </div>
+
+  <h1 class="page-title">ยอดขาย</h1>
+  <p class="subtitle">นำเข้าไฟล์ยอดขายที่บันทึกอัตโนมัติจากหน้าสั่งซื้อ หรือบันทึกเพิ่มด้วยมือ เพื่อดูยอดรายวันและสรุปรายเดือน</p>
+
+  <div class="toolbar">
+    <button class="btn-outline" onclick="exportSales()">⬇ ดาวน์โหลดข้อมูลยอดขาย (JSON)</button>
+    <label class="btn-outline" style="cursor:pointer;">⬆ นำเข้าไฟล์ JSON จากหน้าสั่งซื้อ
+      <input type="file" accept=".json" style="display:none;" onchange="importSales(event)">
+    </label>
+  </div>
+
+  <div class="admin-note">
+    ✅ เมื่อลูกค้าโอนเงินและกด "จำลอง: Admin ยืนยันการชำระเงิน" ในหน้าสั่งซื้อ ระบบจะ<strong>บันทึกยอดขายให้อัตโนมัติ</strong>ในหน้านั้น — แต่เพราะหน้าสั่งซื้อกับหน้า Admin นี้เป็นคนละไฟล์ ไม่มี Backend เชื่อมกัน จึงต้องกดลิงก์ "สำหรับผู้ดูแลระบบ: ดาวน์โหลดข้อมูลยอดขาย" ที่ท้ายหน้าสั่งซื้อ แล้วนำไฟล์ JSON มา "นำเข้า" ที่นี่อีกที ไม่ต้องพิมพ์ยอดเองแล้ว (การนำเข้าจะรวมกับข้อมูลเดิม ไม่ทับรายการซ้ำ)
+  </div>
+
+  <!-- ADD SALE FORM -->
+  <div class="panel">
+    <h2>บันทึกคำสั่งซื้อ</h2>
+    <div class="field-row">
+      <div class="field" id="field-sale-date">
+        <label>วันที่ชำระเงิน</label>
+        <input type="date" id="sale-date">
+        <div class="field-error">กรุณาเลือกวันที่</div>
+      </div>
+      <div class="field" id="field-sale-amount">
+        <label>ยอดเงิน (บาท)</label>
+        <input type="number" id="sale-amount" min="0" placeholder="650">
+        <div class="field-error">กรุณากรอกยอดเงินให้ถูกต้อง</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Order ID / หมายเหตุ (ถ้ามี)</label>
+      <input type="text" id="sale-note" placeholder="เช่น NER-20260907-0001">
+    </div>
+    <div class="form-actions">
+      <button class="btn-primary" onclick="addSale()">บันทึกยอดขาย</button>
+    </div>
+  </div>
+
+  <!-- SALES SUMMARY -->
+  <div class="sales-summary-row">
+    <div class="sales-stat-card">
+      <div class="sales-stat-label">ยอดขายวันนี้</div>
+      <div class="sales-stat-value" id="stat-today">0 บาท</div>
+    </div>
+    <div class="sales-stat-card">
+      <div class="sales-stat-label">ยอดขายเดือนนี้</div>
+      <div class="sales-stat-value" id="stat-this-month">0 บาท</div>
+    </div>
+    <div class="sales-stat-card">
+      <div class="sales-stat-label">ยอดขายทั้งหมด</div>
+      <div class="sales-stat-value" id="stat-all-time">0 บาท</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>สรุปยอดขายรายเดือน</h2>
+    <div id="monthly-summary"></div>
+  </div>
+
+  <div class="panel">
+    <h2>รายการคำสั่งซื้อทั้งหมด</h2>
+    <div id="sales-list"></div>
+  </div>
+
+  <h1 class="page-title">จัดการสินค้า</h1>
+  <p class="subtitle">เพิ่ม แก้ไข หรือลบสินค้า แนบไฟล์ PDF ตามจำนวนเรื่องในชุด และลิงก์ไฟล์เพิ่มเติม</p>
+
+  <div class="toolbar">
+    <button class="btn-outline" onclick="exportCatalog()">⬇ ดาวน์โหลดข้อมูลสินค้า (JSON)</button>
+    <label class="btn-outline" style="cursor:pointer;">⬆ นำเข้าไฟล์ JSON
+      <input type="file" accept=".json" style="display:none;" onchange="importCatalog(event)">
+    </label>
+  </div>
+
+  <!-- ADD / EDIT PRODUCT FORM -->
+  <div class="panel">
+    <h2 id="form-title">เพิ่มสินค้าใหม่</h2>
+    <div class="field" id="field-p-name">
+      <label>ชื่อสินค้า</label>
+      <input type="text" id="p-name" placeholder="เช่น Pathology โรค เล่ม 3">
+      <div class="field-error">กรุณากรอกชื่อสินค้า</div>
+    </div>
+    <div class="field">
+      <label>รายละเอียดสั้น</label>
+      <input type="text" id="p-meta" placeholder="เช่น เอกสารประกอบการเรียน · PDF">
+    </div>
+    <div class="field-row">
+      <div class="field" id="field-p-price">
+        <label>ราคาปัจจุบัน (บาท)</label>
+        <input type="number" id="p-price" min="0" placeholder="250">
+        <div class="field-error">กรุณากรอกราคาให้ถูกต้อง</div>
+      </div>
+      <div class="field">
+        <label>ราคาเดิม (ถ้ามีส่วนลด — เว้นว่างได้)</label>
+        <input type="number" id="p-was" min="0" placeholder="300">
+      </div>
+    </div>
+    <div class="field">
+      <label>จำนวนไฟล์ในชุดนี้ (ถ้าเป็นสินค้าเดี่ยวใส่ 1 ถ้าเป็นคอมโบรวมหลายเรื่องใส่ตามจำนวนเรื่อง)</label>
+      <input type="number" id="p-file-count" min="1" value="1" oninput="onFileCountChange()">
+    </div>
+    <div class="field-note-plain" style="margin-top:-10px; margin-bottom:14px;">📌 ไฟล์ PDF ที่แนบจะถูกฝังลงในไฟล์ JSON ตอนดาวน์โหลด เพื่อให้หน้าสั่งซื้อดาวน์โหลดไฟล์จริงได้ — แนะนำให้แต่ละไฟล์มีขนาดไม่เกิน ~5MB ไม่เช่นนั้นไฟล์ JSON อาจใหญ่มากและโหลดช้า</div>
+    <div id="p-pdf-slots"></div>
+    <div class="field">
+      <label>ลิงก์ไฟล์เพิ่มเติม (วางลิงก์ Google Drive หรืออื่น ๆ)</label>
+      <input type="url" id="p-extra-link" placeholder="https://drive.google.com/...">
+      <div class="field-note-plain" id="p-extra-link-current"></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-primary" onclick="saveProduct()">บันทึกสินค้า</button>
+      <button class="btn-text hidden" id="cancel-edit-btn" onclick="cancelEdit()">ยกเลิกการแก้ไข</button>
+    </div>
+  </div>
+
+  <!-- PRODUCT LIST -->
+  <div class="panel">
+    <h2>สินค้าทั้งหมด</h2>
+    <div id="product-list"></div>
+  </div>
+
+</div>
+
+<script>
+  // ฟังก์ชันแปลงตัวเลขเป็นสกุลเงินบาท (ประกาศบนสุดเพื่อป้องกัน ReferenceError ตอนโหลดหน้า)
+  function money(n) {
+    return Number(n || 0).toLocaleString('th-TH') + ' บาท';
+  }
+
+  // ---- Sales records (manually logged confirmed orders) ----
+  let salesOrders = []; // { id, date: 'YYYY-MM-DD', amount, note }
+
+  function todayStr() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  function monthKey(dateStr) {
+    return dateStr.slice(0, 7); // YYYY-MM
+  }
+
+  function monthLabel(key) {
+    const [y, m] = key.split('-');
+    const names = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+    return `${names[parseInt(m, 10) - 1]} ${y}`;
+  }
+
+  function addSale() {
+    const date = document.getElementById('sale-date').value;
+    const amountRaw = document.getElementById('sale-amount').value;
+    const note = document.getElementById('sale-note').value.trim();
+
+    const dateOk = validateField('field-sale-date', !!date);
+    const amountOk = validateField('field-sale-amount', amountRaw !== '' && Number(amountRaw) >= 0);
+    if (!(dateOk && amountOk)) return;
+
+    salesOrders.push({ id: 's' + Date.now(), date, amount: Number(amountRaw), note });
+
+    document.getElementById('sale-date').value = '';
+    document.getElementById('sale-amount').value = '';
+    document.getElementById('sale-note').value = '';
+
+    renderSalesDashboard();
+  }
+
+  function deleteSale(id) {
+    salesOrders = salesOrders.filter(s => s.id !== id);
+    renderSalesDashboard();
+  }
+
+  function renderSalesDashboard() {
+    const today = todayStr();
+    const thisMonth = monthKey(today);
+
+    const todayTotal = salesOrders.filter(s => s.date === today).reduce((sum, s) => sum + s.amount, 0);
+    const monthTotal = salesOrders.filter(s => monthKey(s.date) === thisMonth).reduce((sum, s) => sum + s.amount, 0);
+    const allTimeTotal = salesOrders.reduce((sum, s) => sum + s.amount, 0);
+
+    document.getElementById('stat-today').textContent = money(todayTotal);
+    document.getElementById('stat-this-month').textContent = money(monthTotal);
+    document.getElementById('stat-all-time').textContent = money(allTimeTotal);
+
+    const byMonth = {};
+    salesOrders.forEach(s => {
+      const key = monthKey(s.date);
+      if (!byMonth[key]) byMonth[key] = { total: 0, count: 0 };
+      byMonth[key].total += s.amount;
+      byMonth[key].count += 1;
+    });
+    const monthKeys = Object.keys(byMonth).sort().reverse();
+
+    const monthlyContainer = document.getElementById('monthly-summary');
+    if (monthKeys.length === 0) {
+      monthlyContainer.innerHTML = '<div class="empty-note">ยังไม่มีข้อมูลยอดขาย</div>';
+    } else {
+      monthlyContainer.innerHTML = monthKeys.map(key => `
+        <div class="month-row">
+          <div>
+            <div class="month-label">${monthLabel(key)}</div>
+            <div class="month-count">${byMonth[key].count} รายการ</div>
+          </div>
+          <div class="month-total">${money(byMonth[key].total)}</div>
+        </div>
+      `).join('');
+    }
+
+    const listContainer = document.getElementById('sales-list');
+    if (salesOrders.length === 0) {
+      listContainer.innerHTML = '<div class="empty-note">ยังไม่มีรายการ</div>';
+    } else {
+      const sorted = [...salesOrders].sort((a, b) => b.date.localeCompare(a.date));
+      listContainer.innerHTML = sorted.map(s => `
+        <div class="sale-row">
+          <div class="sale-date">${s.date}</div>
+          <div class="sale-note">${s.note || '—'}</div>
+          <div class="sale-amount">${money(s.amount)}</div>
+          <button class="btn-text danger" onclick="deleteSale('${s.id}')">ลบ</button>
+        </div>
+      `).join('');
+    }
+  }
+
+  function exportSales() {
+    const blob = new Blob([JSON.stringify({ salesOrders }, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'nurse-er-sales.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function importSales(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        if (!Array.isArray(data.salesOrders)) throw new Error('รูปแบบไฟล์ไม่ถูกต้อง');
+        const existingIds = new Set(salesOrders.map(s => s.id));
+        const newOnes = data.salesOrders.filter(s => !existingIds.has(s.id));
+        salesOrders = salesOrders.concat(newOnes);
+        renderSalesDashboard();
+      } catch (e) {
+        alert('ไม่สามารถนำเข้าไฟล์ได้: ' + e.message);
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  }
+
+  // ---- Initial data, matching the current live catalog ----
+  const emptyFiles = (n) => Array.from({ length: n }, () => ({ pdfName: null, pdfUrl: null, pdfData: null }));
+
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function base64ToBlob(base64, mime) {
+    const byteChars = atob(base64);
+    const byteNumbers = new Array(byteChars.length);
+    for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+    return new Blob([new Uint8Array(byteNumbers)], { type: mime });
+  }
+
+  let products = [
+    { id: 'ekg', name: 'การอ่าน EKG เบื้องต้น', meta: 'คอร์สวิดีโอ', price: 150, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'patho1', name: 'Pathology โรคที่พบบ่อยใน ER เล่ม 1', meta: 'เอกสารประกอบการเรียน · PDF', price: 250, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'patho2', name: 'Pathology โรค เล่ม 2', meta: 'เอกสารประกอบการเรียน · PDF', price: 250, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'ca', name: 'Pathology CA', meta: 'เอกสารประกอบการเรียน · PDF', price: 50, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'ob', name: 'Pathology ผดุงครรภ์', meta: 'เอกสารประกอบการเรียน · PDF', price: 50, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'pedia-newborn', name: 'Pathology Pediatric & Newborn', meta: 'เอกสารประกอบการเรียน · PDF', price: 350, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'case47', name: '47 Case Study', meta: 'โรคสำคัญใน Medical ICU และตึกอายุรกรรม', price: 490, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'surgical', name: 'Surgical & ICU Surgical', meta: 'พยาธิสภาพและการพยาบาลกรณีศึกษา', price: 450, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'icu-med-surgical', name: 'ICU Med & ICU Surgical', meta: 'พยาธิสภาพและการพยาบาลผู้ป่วยวิกฤต', price: 650, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'b-ekg-patho1', name: 'EKG + Pathology เล่ม 1', meta: 'รวม 2 เรื่อง', price: 350, was: 400, files: emptyFiles(2), extraLink: null },
+    { id: 'b-patho12', name: 'Pathology เล่ม 1 + เล่ม 2', meta: 'รวม 2 เรื่อง', price: 450, was: 500, files: emptyFiles(2), extraLink: null },
+    { id: 'b-patho2-ekg', name: 'Pathology เล่ม 2 + EKG', meta: 'รวม 2 เรื่อง', price: 350, was: 400, files: emptyFiles(2), extraLink: null },
+    { id: 'b-triple', name: 'Pathology เล่ม 1 + เล่ม 2 + EKG', meta: 'รวม 3 เรื่อง', price: 550, was: 650, files: emptyFiles(3), extraLink: null },
+    { id: 'b-all5', name: 'ครบชุด Pathology + EKG', meta: 'EKG, Patho เล่ม 1-2, CA, ผดุงครรภ์ (5 เรื่อง)', price: 650, was: 750, files: emptyFiles(5), extraLink: null },
+    { id: 'b-addpatho2', name: 'เพิ่ม Pathology เล่ม 2', meta: 'ราคาพิเศษสำหรับผู้ที่มี EKG + Pathology เล่ม 1 แล้ว', price: 200, was: null, files: emptyFiles(1), extraLink: null },
+    { id: 'b-5-case', name: 'ครบชุด Pathology + EKG + 47 Case Study', meta: 'รวม 6 เรื่อง', price: 850, was: 1140, files: emptyFiles(6), extraLink: null },
+    { id: 'b-5-surgical', name: 'ครบชุด Pathology + EKG + Surgical & ICU Surgical', meta: 'รวม 6 เรื่อง', price: 850, was: 1100, files: emptyFiles(6), extraLink: null },
+    { id: 'b-all8', name: 'ครบทุกไฟล์ (8 ไฟล์)', meta: 'ทุกเล่ม + Pediatric & Newborn + 47 Case Study + Surgical & ICU Surgical', price: 1400, was: 2040, files: emptyFiles(8), extraLink: null },
+  ];
+
+  let editingId = null;
+
+  function slugify(name) {
+    let base = name.trim().toLowerCase().replace(/[^a-z0-9ก-๙]+/g, '-').replace(/(^-|-$)/g, '');
+    if (!base) base = 'item';
+    let id = base, i = 1;
+    while (products.some(p => p.id === id)) { id = base + '-' + (++i); }
+    return id;
+  }
+
+  function validateField(id, isValid) {
+    const field = document.getElementById(id);
+    field.classList.toggle('invalid', !isValid);
+    return isValid;
+  }
+
+  function renderProducts() {
+    const container = document.getElementById('product-list');
+    if (products.length === 0) {
+      container.innerHTML = '<div class="empty-note">ยังไม่มีสินค้า</div>';
+      return;
+    }
+    container.innerHTML = products.map(p => {
+      const attachedCount = p.files.filter(f => f.pdfName).length;
+      const fileLines = p.files.length === 1
+        ? `<div class="file-status ${attachedCount ? 'attached' : 'missing'}">
+             ${p.files[0].pdfName ? '📎 แนบไฟล์แล้ว: ' + p.files[0].pdfName : '— ยังไม่ได้แนบไฟล์ PDF'}
+             ${p.files[0].pdfUrl ? ` · <a href="${p.files[0].pdfUrl}" target="_blank" rel="noopener">เปิดไฟล์</a>` : ''}
+           </div>`
+        : `<div class="file-status ${attachedCount === p.files.length ? 'attached' : 'missing'}">
+             📎 แนบแล้ว ${attachedCount}/${p.files.length} ไฟล์
+           </div>
+           ${p.files.map((f, i) => `
+             <div class="file-list-row">
+               ไฟล์ที่ ${i + 1}: ${f.pdfName ? f.pdfName : '<span style="color:var(--ink-soft);">— ยังไม่ได้แนบ</span>'}
+               ${f.pdfUrl ? ` · <a href="${f.pdfUrl}" target="_blank" rel="noopener">เปิดไฟล์</a>` : ''}
+             </div>
+           `).join('')}`;
+      return `
+      <div class="product-row">
+        <div class="info">
+          <div class="name">${p.name}</div>
+          <div class="meta">${p.meta || ''}</div>
+          ${fileLines}
+          <div class="file-status ${p.extraLink ? 'attached' : 'missing'} extra-link-row">
+            ${p.extraLink ? `🔗 ลิงก์เพิ่มเติม: <a href="${p.extraLink}" target="_blank" rel="noopener">${p.extraLink}</a>` : '— ยังไม่ได้ใส่ลิงก์ไฟล์เพิ่มเติม'}
+          </div>
+        </div>
+        <div class="price">
+          ${p.was ? `<span class="was">${money(p.was)}</span>` : ''}${money(p.price)}
+        </div>
+        <div class="row-actions">
+          <button class="btn-text" onclick="editProduct('${p.id}')">แก้ไข</button>
+          <button class="btn-text danger" onclick="deleteProduct('${p.id}')">ลบ</button>
+        </div>
+      </div>
+    `;
+    }).join('');
+  }
+
+  function renderFileSlots(count, existingFiles) {
+    const container = document.getElementById('p-pdf-slots');
+    let html = '';
+    for (let i = 0; i < count; i++) {
+      const current = existingFiles && existingFiles[i] ? existingFiles[i].pdfName : null;
+      html += `
+        <div class="pdf-slot">
+          <label>ไฟล์ที่ ${i + 1}</label>
+          <input type="file" id="p-pdf-slot-${i}" accept=".pdf">
+          <div class="field-note-plain">${current ? 'ไฟล์ปัจจุบัน: ' + current + ' (เลือกไฟล์ใหม่เพื่อแทนที่)' : ''}</div>
+        </div>
+      `;
+    }
+    container.innerHTML = html;
+  }
+
+  function onFileCountChange() {
+    let count = parseInt(document.getElementById('p-file-count').value, 10);
+    if (!count || count < 1) count = 1;
+    const existing = editingId ? products.find(x => x.id === editingId).files : [];
+    renderFileSlots(count, existing);
+  }
+
+  function editProduct(id) {
+    const p = products.find(x => x.id === id);
+    if (!p) return;
+    editingId = id;
+    document.getElementById('form-title').textContent = 'แก้ไขสินค้า: ' + p.name;
+    document.getElementById('p-name').value = p.name;
+    document.getElementById('p-meta').value = p.meta || '';
+    document.getElementById('p-price').value = p.price;
+    document.getElementById('p-was').value = p.was || '';
+    document.getElementById('p-file-count').value = p.files.length;
+    renderFileSlots(p.files.length, p.files);
+    document.getElementById('p-extra-link').value = p.extraLink || '';
+    document.getElementById('cancel-edit-btn').classList.remove('hidden');
+    window.scrollTo(0, 0);
+  }
+
+  function cancelEdit() {
+    editingId = null;
+    document.getElementById('form-title').textContent = 'เพิ่มสินค้าใหม่';
+    document.getElementById('p-name').value = '';
+    document.getElementById('p-meta').value = '';
+    document.getElementById('p-price').value = '';
+    document.getElementById('p-was').value = '';
+    document.getElementById('p-file-count').value = 1;
+    renderFileSlots(1, []);
+    document.getElementById('p-extra-link').value = '';
+    document.getElementById('cancel-edit-btn').classList.add('hidden');
+  }
+
+  function revokeProductUrls(p) {
+    p.files.forEach(f => { if (f.pdfUrl) URL.revokeObjectURL(f.pdfUrl); });
+  }
+
+  function deleteProduct(id) {
+    const p = products.find(x => x.id === id);
+    if (p) revokeProductUrls(p);
+    products = products.filter(x => x.id !== id);
+    if (editingId === id) cancelEdit();
+    renderProducts();
+  }
+
+  async function saveProduct() {
+    const name = document.getElementById('p-name').value.trim();
+    const priceRaw = document.getElementById('p-price').value;
+    const wasRaw = document.getElementById('p-was').value;
+    const meta = document.getElementById('p-meta').value.trim();
+    const extraLink = document.getElementById('p-extra-link').value.trim();
+    let fileCount = parseInt(document.getElementById('p-file-count').value, 10);
+    if (!fileCount || fileCount < 1) fileCount = 1;
+
+    const nameOk = validateField('field-p-name', name.length > 0);
+    const priceOk = validateField('field-p-price', priceRaw !== '' && Number(priceRaw) >= 0);
+    if (!(nameOk && priceOk)) return;
+
+    const price = Number(priceRaw);
+    const was = wasRaw !== '' ? Number(wasRaw) : null;
+
+    const saveBtn = document.querySelector('.form-actions .btn-primary');
+    const originalBtnText = saveBtn.textContent;
+    saveBtn.textContent = 'กำลังประมวลผลไฟล์...';
+    saveBtn.disabled = true;
+
+    const oldFiles = editingId ? products.find(x => x.id === editingId).files : [];
+    const newFiles = [];
+    for (let i = 0; i < fileCount; i++) {
+      const input = document.getElementById('p-pdf-slot-' + i);
+      const selected = input && input.files[0];
+      if (selected) {
+        if (oldFiles[i] && oldFiles[i].pdfUrl) URL.revokeObjectURL(oldFiles[i].pdfUrl);
+        const pdfData = await fileToBase64(selected);
+        newFiles.push({ pdfName: selected.name, pdfUrl: URL.createObjectURL(selected), pdfData });
+      } else if (oldFiles[i]) {
+        newFiles.push(oldFiles[i]);
+      } else {
+        newFiles.push({ pdfName: null, pdfUrl: null, pdfData: null });
+      }
+    }
+    // revoke any old files beyond the new count
+    for (let i = fileCount; i < oldFiles.length; i++) {
+      if (oldFiles[i] && oldFiles[i].pdfUrl) URL.revokeObjectURL(oldFiles[i].pdfUrl);
+    }
+
+    saveBtn.textContent = originalBtnText;
+    saveBtn.disabled = false;
+
+    if (editingId) {
+      const p = products.find(x => x.id === editingId);
+      p.name = name; p.meta = meta; p.price = price; p.was = was;
+      p.extraLink = extraLink || null;
+      p.files = newFiles;
+    } else {
+      const newProduct = {
+        id: slugify(name), name, meta, price, was,
+        files: newFiles,
+        extraLink: extraLink || null,
+      };
+      products.push(newProduct);
+    }
+
+    cancelEdit();
+    renderProducts();
+  }
+
+  function exportCatalog() {
+    const data = {
+      products: products.map(p => ({
+        id: p.id, name: p.name, meta: p.meta, price: p.price, was: p.was,
+        fileNames: p.files.map(f => f.pdfName),
+        fileData: p.files.map(f => f.pdfData || null),
+        extraLink: p.extraLink,
+      }))
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'nurse-er-catalog.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function importCatalog(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        if (!Array.isArray(data.products)) throw new Error('รูปแบบไฟล์ไม่ถูกต้อง');
+        products.forEach(p => revokeProductUrls(p));
+        products = data.products.map(p => {
+          const names = Array.isArray(p.fileNames) ? p.fileNames : [null];
+          const dataArr = Array.isArray(p.fileData) ? p.fileData : [];
+          return {
+            id: p.id, name: p.name, meta: p.meta, price: p.price, was: p.was,
+            extraLink: p.extraLink || null,
+            files: names.map((n, i) => {
+              const pdfData = dataArr[i] || null;
+              const pdfUrl = pdfData ? URL.createObjectURL(base64ToBlob(pdfData, 'application/pdf')) : null;
+              return { pdfName: n || null, pdfUrl, pdfData };
+            }),
+          };
+        });
+        cancelEdit();
+        renderProducts();
+      } catch (e) {
+        alert('ไม่สามารถนำเข้าไฟล์ได้: ' + e.message);
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  }
+
+  // เรียกทำงานครั้งแรกหลังโหลดหน้า
+  renderProducts();
+  renderFileSlots(1, []);
+  renderSalesDashboard();
+  document.getElementById('sale-date').value = todayStr();
+</script>
+
+</body>
+</html>
