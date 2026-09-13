@@ -13,11 +13,11 @@
     },
     {
       "src": "/admin",
-      "dest": "/admin.html"
+      "dest": "/api/admin.php"
     },
     {
-      "src": "/admin.html",
-      "dest": "/admin.html"
+      "src": "/admin.php",
+      "dest": "/api/admin.php"
     },
     {
       "src": "/(.*)",
