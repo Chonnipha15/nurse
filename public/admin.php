@@ -1,3 +1,11 @@
+<?php
+// เริ่มต้น Session เพื่อรองรับการเช็กสิทธิ์ Admin ในอนาคต
+session_start();
+
+// ดึงค่าการเชื่อมต่อ Supabase จาก Environment Variables หรือใช้ค่า Default
+$supabaseUrl = getenv('SUPABASE_URL') ?: 'https://rpbyapwseypgzcuesnoi.supabase.co';
+$supabaseAnonKey = getenv('SUPABASE_ANON_KEY') ?: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwYnlhcHdzZXlwZ3pjdWVzbm9pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyODE0MjgsImV4cCI6MjEwNDg1NzQyOH0.nFcP1PYQSSwM8ZEoMJFiNEQC2JhmLBImOgk6i_rvlkI';
+?>
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -7,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- 1. นำเข้า Supabase JS Client จาก CDN -->
+<!-- นำเข้า Supabase JS Client จาก CDN -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
@@ -103,7 +111,7 @@
   .field-note-plain { font-size: 12px; color: var(--ink-soft); margin-top: 6px; }
   .hidden { display: none; }
 
-  /* ---- Sales dashboard ---- */
+  /* Sales dashboard */
   .sales-summary-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
   @media (max-width: 640px) { .sales-summary-row { grid-template-columns: 1fr; } }
   .sales-stat-card {
@@ -140,7 +148,7 @@
       <div class="brand">Nurse<span>ER</span><small>ระบบจัดการสินค้าและเนื้อหา</small></div>
       <span class="admin-badge">ADMIN</span>
     </div>
-    <a href="index.html" class="btn-outline">‹ กลับหน้าร้าน</a>
+    <a href="index.php" class="btn-outline">‹ กลับหน้าร้าน</a>
   </header>
 
   <div class="admin-note">
@@ -300,9 +308,9 @@
 </div>
 
 <script>
-  // 1. กำหนดค่าเชื่อมต่อ Supabase
-  const SUPABASE_URL = 'https://rpbyapwseypgzcuesnoi.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwYnlhcHdzZXlwZ3pjdWVzbm9pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyODE0MjgsImV4cCI6MjEwNDg1NzQyOH0.nFcP1PYQSSwM8ZEoMJFiNEQC2JhmLBImOgk6i_rvlkI';
+  // 1. กำหนดค่าเชื่อมต่อ Supabase ส่งผ่านตัวแปรจาก PHP
+  const SUPABASE_URL = <?= json_encode($supabaseUrl) ?>;
+  const SUPABASE_ANON_KEY = <?= json_encode($supabaseAnonKey) ?>;
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   function money(n) {
@@ -321,7 +329,7 @@
     if (!key || !key.includes('-')) return '-';
     const [y, m] = key.split('-');
     const names = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
-    return `${names[parseInt(m, 10) - 1]} ${y}`;
+    return `${names[parseInt(m, 10) - 1]}${y}`;
   }
 
   function validateField(id, isValid) {
@@ -491,7 +499,7 @@
     container.innerHTML = data.map(m => `
       <div class="product-row">
         <div class="info">
-          <div class="name">${icons[m.file_type] || '📁'} ${m.title} ${m.is_preview ? '<span style="font-size:11px; color:#5B7A52; background:#EAF0E6; padding:2px 8px; border-radius:999px;">ดูตัวอย่างฟรี</span>' : ''}</div>
+          <div class="name">${icons[m.file_type] || '📁'} ${m.title}${m.is_preview ? '<span style="font-size:11px; color:#5B7A52; background:#EAF0E6; padding:2px 8px; border-radius:999px;">ดูตัวอย่างฟรี</span>' : ''}</div>
           <div class="meta">${m.description || 'ไม่มีคำอธิบาย'} · ชนิด: ${m.file_type.toUpperCase()} · รูปแบบ: .${m.file_format || '-'}</div>
           <div class="file-status attached extra-link-row">
             🔗 <a href="${m.file_url}" target="_blank" rel="noopener">เปิดไฟล์ / ดาวน์โหลด</a>
@@ -819,10 +827,14 @@
     }
   }
 
-  // ผูกฟังก์ชันเข้า Global Window สำหรับปุ่มที่เรียกผ่าน inline onclick
+  // ผูกฟังก์ชันเข้า Global Window ทั้งหมดเพื่อความปลอดภัย
+  window.saveProduct = saveProduct;
+  window.cancelEdit = cancelEdit;
+  window.addSale = addSale;
+  window.deleteSale = deleteSale;
   window.editProduct = editProduct;
   window.deleteProduct = deleteProduct;
-  window.deleteSale = deleteSale;
+  window.saveLearningMaterial = saveLearningMaterial;
   window.deleteMaterial = deleteMaterial;
 
   // ผูก Event Listeners ตรงจุด
