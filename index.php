@@ -622,14 +622,51 @@ $initialReviews = [
 </div>
 
 <script>
-  // 1. รับค่า Configuration จาก PHP
-  const SUPABASE_URL = "<?= htmlspecialchars($supabaseUrl, ENT_QUOTES, 'UTF-8') ?>";
-  const SUPABASE_ANON_KEY = "<?= htmlspecialchars($supabaseAnonKey, ENT_QUOTES, 'UTF-8') ?>";
+  // 1. ตั้งค่า Configuration
+  const SUPABASE_URL = "https://rpbyapwseypgzcuesnoi.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwYnlhcHdzZXlwZ3pjdWVzbm9pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyODE0MjgsImV4cCI6MjEwNDg1NzQyOH0.nFcP1PYQSSwM8ZEoMJFiNEQC2JhmLBImOgk6i_rvlkI";
   const supabase = (window.supabase && SUPABASE_URL) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
-  // 2. รับข้อมูลรายการสินค้า
-  let catalog = <?php echo json_encode($catalog, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?> || [];
-  
+  // 2. ข้อมูลสินค้า (Pure JavaScript ไม่ต้องผ่าน PHP)
+  const catalog = [
+    {
+      group: 'รายชิ้น',
+      desc: 'ซื้อทีละเล่ม เลือกเฉพาะเรื่องที่ต้องการ',
+      items: [
+        { id: 'ekg', name: 'การอ่าน EKG เบื้องต้น', meta: 'คอร์สวิดีโอ', price: 150, was: null },
+        { id: 'patho1', name: 'Pathology โรคที่พบบ่อยใน ER เล่ม 1', meta: 'เอกสารประกอบการเรียน · PDF', price: 250, was: null, pdf_url: '/files/BIOLOGY.pdf' },
+        { id: 'patho2', name: 'Pathology โรค เล่ม 2', meta: 'เอกสารประกอบการเรียน · PDF', price: 250, was: null },
+        { id: 'ca', name: 'Pathology CA', meta: 'เอกสารประกอบการเรียน · PDF', price: 50, was: null },
+        { id: 'ob', name: 'Pathology ผดุงครรภ์', meta: 'เอกสารประกอบการเรียน · PDF', price: 50, was: null },
+        { id: 'pedia-newborn', name: 'Pathology Pediatric & Newborn', meta: 'เอกสารประกอบการเรียน · PDF', price: 350, was: null },
+        { id: 'case47', name: '47 Case Study', meta: 'โรคสำคัญใน Medical ICU และตึกอายุรกรรม', price: 490, was: null },
+        { id: 'surgical', name: 'Surgical & ICU Surgical', meta: 'พยาธิสภาพและการพยาบาลกรณีศึกษา', price: 450, was: null }
+      ]
+    },
+    {
+      group: 'ชุดคอมโบ คุ้มกว่าซื้อแยก',
+      desc: 'รวมหลายเล่มในราคาพิเศษ',
+      items: [
+        { id: 'b-ekg-patho1', name: 'EKG + Pathology เล่ม 1', meta: 'รวม 2 เรื่อง', price: 350, was: 400 },
+        { id: 'b-patho12', name: 'Pathology เล่ม 1 + เล่ม 2', meta: 'รวม 2 เรื่อง', price: 450, was: 500 },
+        { id: 'b-patho2-ekg', name: 'Pathology เล่ม 2 + EKG', meta: 'รวม 2 เรื่อง', price: 350, was: 400 },
+        { id: 'b-triple', name: 'Pathology เล่ม 1 + เล่ม 2 + EKG', meta: 'รวม 3 เรื่อง', price: 550, was: 650 },
+        { id: 'b-all5', name: 'ครบชุด Pathology + EKG', meta: 'EKG, Patho เล่ม 1-2, CA, ผดุงครรภ์ (5 เรื่อง)', price: 650, was: 750 },
+        { id: 'b-addpatho2', name: 'เพิ่ม Pathology เล่ม 2', meta: 'ราคาพิเศษสำหรับผู้ที่มี EKG + Pathology เล่ม 1 แล้ว', price: 200, was: null },
+        { id: 'icu-med-surgical', name: 'ICU Med & ICU Surgical', meta: 'พยาธิสภาพและการพยาบาลผู้ป่วยวิกฤต', price: 650, was: null }
+      ]
+    },
+    {
+      group: 'แพ็กใหญ่ ครบจบทุกเรื่อง',
+      desc: '',
+      items: [
+        { id: 'b-5-case', name: 'ครบชุด Pathology + EKG + 47 Case Study', meta: 'รวม 6 เรื่อง', price: 850, was: 1140 },
+        { id: 'b-5-surgical', name: 'ครบชุด Pathology + EKG + Surgical & ICU Surgical', meta: 'รวม 6 เรื่อง', price: 850, was: 1100 },
+        { id: 'b-all8', name: 'ครบทุกไฟล์ (8 ไฟล์)', meta: 'ทุกเล่ม + Pediatric & Newborn + 47 Case Study + Surgical & ICU Surgical', price: 1400, was: 2040 }
+      ]
+    }
+  ];
+
   let productIndex = {};
   if (Array.isArray(catalog)) {
     catalog.forEach(function(g) {
@@ -652,7 +689,7 @@ $initialReviews = [
   function toggleCart(id) {
     let item = productIndex[id];
 
-    // Fallback: หากหาในดัชนีไม่เจอ ให้ค้นจาก catalog ตรงๆ
+    // Fallback: หากหาในดัชนีไม่พบ ให้วนหาจาก catalog
     if (!item && Array.isArray(catalog)) {
       for (const g of catalog) {
         const found = g.items.find(x => x.id === id);
@@ -683,7 +720,7 @@ $initialReviews = [
     const countEl = document.getElementById('cart-count');
     if (countEl) countEl.textContent = cart.length;
 
-    // อัปเดตสถานะปุ่มในหน้าร้าน
+    // อัปเดตสถานะปุ่มบนหน้าเว็บ
     Object.keys(productIndex).forEach(id => {
       const btn = document.getElementById('btn-' + id);
       if (btn) {
