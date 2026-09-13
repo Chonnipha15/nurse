@@ -1,0 +1,30 @@
+{
+  "buildCommand": null,
+  "outputDirectory": null,
+  "functions": {
+    "api/**/*.php": {
+      "runtime": "vercel-php@0.7.3"
+    },
+    "*.php": {
+      "runtime": "vercel-php@0.7.3"
+    }
+  },
+  "routes": [
+    {
+      "src": "/files/(.*)",
+      "dest": "/public/files/$1"
+    },
+    {
+      "src": "/admin",
+      "dest": "/admin.php"
+    },
+    {
+      "src": "/admin.php",
+      "dest": "/admin.php"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.php"
+    }
+  ]
+}
